@@ -24,7 +24,7 @@ public class RegisterFragment extends Fragment {
     private RegisterViewModel viewModel;
     private FragmentRegisterBinding binding;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

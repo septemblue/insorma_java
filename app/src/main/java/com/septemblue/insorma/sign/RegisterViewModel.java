@@ -17,7 +17,6 @@ public class RegisterViewModel extends ViewModel {
     private MutableLiveData<String> _registerMessage = new MutableLiveData<>("");
     LiveData<String> registerMessage = _registerMessage;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void register(
             EditText emailAddress,
             EditText username,
@@ -42,7 +41,6 @@ public class RegisterViewModel extends ViewModel {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private boolean validate(
             String emailAddress,
             String username,

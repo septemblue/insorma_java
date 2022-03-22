@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

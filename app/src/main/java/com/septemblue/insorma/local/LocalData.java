@@ -33,7 +33,6 @@ public class LocalData {
     }
 
     // set checkedOut furniture only if it exist in database else throw
-    @RequiresApi(api = Build.VERSION_CODES.N)
     void setCheckedOutFurniture(String furnitureId) {
         if (Objects.requireNonNull(Database.furnitures.getValue()).stream().anyMatch(it -> it.id.equals(furnitureId))) {
             _checkedOutFurniture.setValue(furnitureId);
