@@ -7,6 +7,8 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Objects;
+
 public class LocalData {
     private MutableLiveData<String> _loggedUser = new MutableLiveData<>("");
     LiveData<String> loggedUser;
@@ -19,7 +21,7 @@ public class LocalData {
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
     @RequiresApi(api = Build.VERSION_CODES.N)
     void setLoggedUser(String userEmail) {
-        if (Database.accounts.getValue().stream().anyMatch(it -> it.emailAddress.equals(userEmail))) {
+        if (Objects.requireNonNull(Database.accounts.getValue()).containsKey(userEmail)) {
             _loggedUser.setValue(userEmail);
         } else {
             throw new RuntimeException("user does not exist");
@@ -37,7 +39,7 @@ public class LocalData {
     // set checkedOut furniture only if it exist in database else throw
     @RequiresApi(api = Build.VERSION_CODES.N)
     void setCheckedOutFurniture(String furnitureId) {
-        if (Database.furnitures.getValue().stream().anyMatch(it -> it.id.equals(furnitureId))) {
+        if (Objects.requireNonNull(Database.furnitures.getValue()).stream().anyMatch(it -> it.id.equals(furnitureId))) {
             _checkedOutFurniture.setValue(furnitureId);
         }else {
             throw new RuntimeException("furniture does not exist");

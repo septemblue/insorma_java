@@ -2,10 +2,10 @@ package com.septemblue.insorma.local;
 
 public class Account {
 
-    String emailAddress;
-    String username;
-    String password;
-    String phoneNumber;
+    public String emailAddress;
+    public String username;
+    public String password;
+    public String phoneNumber;
 
     //required data
     public Account(String emailAddress, String username, String password) {
