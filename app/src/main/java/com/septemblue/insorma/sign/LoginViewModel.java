@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.septemblue.insorma.local.Account;
 import com.septemblue.insorma.local.Database;
+import com.septemblue.insorma.local.LocalData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,25 +19,23 @@ import java.util.Optional;
 
 public class LoginViewModel extends ViewModel {
     // can only set here when user success to login
-    private MutableLiveData<Boolean> _logged = new MutableLiveData<>(false);
-    LiveData<Boolean> logged;
-    LiveData<Boolean> getLogged() {return _logged;}
+    private final MutableLiveData<Boolean> _logged = new MutableLiveData<>(false);
+    LiveData<Boolean> logged = _logged;
 
     // message for login fragment
-    private MutableLiveData<String> _loginMessage = new MutableLiveData<>("");
-    LiveData<String> loginMessage;
-    LiveData<String> getLoginMessage() {return _loginMessage;}
+    private final MutableLiveData<String> _loginMessage = new MutableLiveData<>("");
+    LiveData<String> loginMessage = _loginMessage;
 
     // validate the edit texts and validate the data
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public String login(EditText emailAddress, EditText password) {
+    public void login(EditText emailAddress, EditText password) {
         // implement isBlank idk why i cant access the function
         if (emailAddress.getText().toString().trim().isEmpty()) {
             _loginMessage.setValue("All fields must be filled");
-            return "";
+            return;
         }
         boolean valid = validate(emailAddress.getText().toString(), password.getText().toString());
-        return "";
+        if (valid) { LocalData.setLoggedUser(emailAddress.getText().toString()); }
     }
 
     // required validations

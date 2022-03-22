@@ -1,5 +1,6 @@
 package com.septemblue.insorma.sign;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -12,9 +13,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.septemblue.insorma.MainActivity;
 import com.septemblue.insorma.databinding.FragmentLoginBinding;
 import com.septemblue.insorma.local.Database;
+import com.septemblue.insorma.local.LocalData;
 
 import kotlin.Lazy;
 
@@ -34,8 +38,23 @@ public class LoginFragment extends Fragment {
 
         //login
         binding.loginButton.setOnClickListener(it -> {
-            String user = viewModel.login(binding.loginEmailAddress, binding.loginPassword);
+            viewModel.login(binding.loginEmailAddress, binding.loginPassword);
+            // Give login notification
+            viewModel.logged.observe(getViewLifecycleOwner(), newValue -> Toast.makeText(getActivity(), viewModel.loginMessage.getValue(), Toast.LENGTH_SHORT).show());
         });
+        // navigate if succeed
+        viewModel.logged.observe(getViewLifecycleOwner(), newValue -> {
+            if (newValue) {
+                Intent toMainActivity = new Intent(this.getContext(), MainActivity.class);
+                startActivity(toMainActivity);
+            }
+        });
+
+        // register
+//        binding.loginRegisterButton.setOnClickListener() {
+//            view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+//        }
+
 
         return view;
     }

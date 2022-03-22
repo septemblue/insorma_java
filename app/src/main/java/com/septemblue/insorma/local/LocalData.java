@@ -2,7 +2,6 @@ package com.septemblue.insorma.local;
 
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,17 +9,15 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.Objects;
 
 public class LocalData {
-    private MutableLiveData<String> _loggedUser = new MutableLiveData<>("");
-    LiveData<String> loggedUser;
+    private static MutableLiveData<String> _loggedUser = new MutableLiveData<>("");
+    static LiveData<String> loggedUser;
 
-    // return immutable live data
-    LiveData<String> getLoggedUser() {
-        return _loggedUser;
-    }
+    // return immutable live data ;
+    public static LiveData<String> getLoggedUser() { return _loggedUser; }
 
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
     @RequiresApi(api = Build.VERSION_CODES.N)
-    void setLoggedUser(String userEmail) {
+    public static void setLoggedUser(String userEmail) {
         if (Objects.requireNonNull(Database.accounts.getValue()).containsKey(userEmail)) {
             _loggedUser.setValue(userEmail);
         } else {
@@ -28,11 +25,11 @@ public class LocalData {
         }
     }
 
-    private MutableLiveData<String> _checkedOutFurniture = new MutableLiveData<>("");
-    LiveData<String> checkedOutFurniture;
+    private static MutableLiveData<String> _checkedOutFurniture = new MutableLiveData<>("");
+    static LiveData<String> checkedOutFurniture;
 
     // return immutable live data
-    LiveData<String> getCheckedOutFurniture() {
+    static LiveData<String> getCheckedOutFurniture() {
         return _checkedOutFurniture;
     }
 
