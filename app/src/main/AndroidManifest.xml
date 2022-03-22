@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Insorma">
         <activity
+            android:name=".sign.SignActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

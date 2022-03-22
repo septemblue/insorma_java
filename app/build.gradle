@@ -1,3 +1,7 @@
+buildscript {
+    ext.nav_version = "2.4.1"
+    ext.lifecycle_version = "2.5.0-alpha04"
+}
 plugins {
     id 'com.android.application'
 }
@@ -14,7 +18,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -28,7 +35,11 @@ android {
 }
 
 dependencies {
-
+    // View Model
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // Fragment + navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
