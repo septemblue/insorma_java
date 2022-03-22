@@ -55,21 +55,21 @@ public class RegisterViewModel extends ViewModel {
         } else if (username.length() < 3 || username.length() > 20) {
             _registerMessage.setValue("username must between 3 to 20 character");
             return false;
-        } else if (password.chars().allMatch(Character::isLetter) || password.chars().allMatch(Character::isDigit)) {
+        } else if (!isAlphanumeric(password)) {
             _registerMessage.setValue("password must contain number and alphabets");
             return false;
         } else if (Database.accounts.getValue().containsKey(emailAddress)) {
             _registerMessage.setValue("email address already exist");
             return false;
-        } else if (Database.accounts.getValue().values().stream()) {
+        } else if (Account.any(Database.accounts.getValue(), username)) {
             _registerMessage.setValue("username already exist");
-            privateAny(it -> it.username.equals(username));
             return false;
         }
         return true;
     }
 
     // private methods to implement somehting not exist in api 23 or java
+    // because theres no isblank and the calllength is too long so i made this xd
     private boolean privateIsBlank(EditText ... args) {
         for (EditText it : args) {
             if (it.getText().toString().trim().isEmpty()) {
@@ -79,12 +79,26 @@ public class RegisterViewModel extends ViewModel {
         return false;
     }
 
-    public boolean privateAny(Predicate<Account> x) {
-        boolean exist = false;
-        for (Map.Entry<String, Account> set : Database.accounts.getValue().entrySet()) {
-            if (x.test(set.getValue())) {
-                exist = true;
+    // just random implementation hahaha
+    private boolean isAlphanumeric(String sequence) {
+        char[] charArray = sequence.toCharArray();
+        boolean isLetterOnly = true;
+        boolean isDigitOnly = true;
+        for (char c :
+                charArray) {
+            if (Character.isDigit(c)) {
+                isLetterOnly = false;
             }
         }
+        for (char c :
+                charArray) {
+            if (Character.isLetter(c)) {
+                isDigitOnly = false;
+            }
+        }
+        if (!isDigitOnly && !isLetterOnly) {
+            return true;
+        }
+        return false;
     }
 }

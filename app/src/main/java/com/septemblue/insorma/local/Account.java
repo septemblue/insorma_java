@@ -28,4 +28,16 @@ public class Account {
         return account;
     }
 
+    public static Boolean any(HashMap<String, Account> accounts, String username) {
+        boolean exist = false;
+        for (Account x :
+                accounts.values()) {
+            if (x.username.equals(username)) {
+                exist = true;
+                break;
+            }
+        }
+        return exist;
+    }
+
 }
