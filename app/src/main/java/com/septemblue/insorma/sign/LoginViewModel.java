@@ -28,7 +28,6 @@ public class LoginViewModel extends ViewModel {
     LiveData<String> loginMessage = _loginMessage;
 
     // validate the edit texts and validate the data
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void login(EditText emailAddress, EditText password) {
         // implement isBlank idk why i cant access the function
         if (emailAddress.getText().toString().trim().isEmpty()) {

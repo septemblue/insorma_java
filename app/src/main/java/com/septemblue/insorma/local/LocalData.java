@@ -16,7 +16,6 @@ public class LocalData {
     public static LiveData<String> getLoggedUser() { return _loggedUser; }
 
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static void setLoggedUser(String userEmail) {
         if (Objects.requireNonNull(Database.accounts.getValue()).containsKey(userEmail)) {
             _loggedUser.setValue(userEmail);

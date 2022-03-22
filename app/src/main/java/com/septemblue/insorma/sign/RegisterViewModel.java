@@ -54,7 +54,7 @@ public class RegisterViewModel extends ViewModel {
         } else if (username.length() < 3 || username.length() > 20) {
             _registerMessage.setValue("username must between 3 to 20 character");
             return false;
-        } else if (password.chars().allMatch(Character::isLetterOrDigit)) {
+        } else if (password.chars().allMatch(Character::isLetter) || password.chars().allMatch(Character::isDigit)) {
             _registerMessage.setValue("password must contain number and alphabets");
             return false;
         } else if (Database.accounts.getValue().containsKey(emailAddress)) {
