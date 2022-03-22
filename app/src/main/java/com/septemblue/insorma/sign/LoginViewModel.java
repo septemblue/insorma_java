@@ -55,6 +55,7 @@ public class LoginViewModel extends ViewModel {
             return false;
         }
         _loginMessage.setValue("Welcome " + Objects.requireNonNull(accounts.get(emailAddress)).username);
+        _logged.setValue(true);
         return true;
     }
 }
