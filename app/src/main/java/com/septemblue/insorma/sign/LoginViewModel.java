@@ -1,6 +1,7 @@
 package com.septemblue.insorma.sign;
 
 import android.os.Build;
+import android.util.Log;
 import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
@@ -44,7 +45,7 @@ public class LoginViewModel extends ViewModel {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private boolean validate(String emailAddress, String password) {
         HashMap<String, Account> accounts = Database.accounts.getValue();
-
+        Log.i("loger", String.valueOf(accounts));
         assert accounts != null;
         if (!accounts.containsKey(emailAddress)) {
             _loginMessage.setValue("email not found");

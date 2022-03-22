@@ -12,11 +12,10 @@ public class Database {
     private static final Account admin = new Account("admin", "superuser", "admin");
 //   private static final ArrayList<Furniture> example = new ArrayList<>(Furniture());
 
-    public static MutableLiveData<HashMap<String, Account>> accounts = new MutableLiveData<>(new HashMap<>());
+    public static MutableLiveData<HashMap<String, Account>> accounts = new MutableLiveData<>(new HashMap<String, Account>()
+    {{ put("admin", admin);}});
+
     public static MutableLiveData<ArrayList<Furniture>> furnitures = new MutableLiveData<>(new ArrayList<>());
     public static MutableLiveData<Vector<History>> history = new MutableLiveData<>(new Vector<>());
-
-    public Database() {
-        Objects.requireNonNull(accounts.getValue()).put("admin", admin);
-    }
 }
+
