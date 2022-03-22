@@ -45,12 +45,12 @@ public class LoginViewModel extends ViewModel {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private boolean validate(String emailAddress, String password) {
         HashMap<String, Account> accounts = Database.accounts.getValue();
-        Log.i("loger", String.valueOf(accounts));
+        Log.i("loger", String.valueOf(accounts.get(emailAddress).password));
         assert accounts != null;
         if (!accounts.containsKey(emailAddress)) {
             _loginMessage.setValue("email not found");
             return false;
-        } else if (Objects.requireNonNull(accounts.get(emailAddress)).password.equals(password)) {
+        } else if (!Objects.requireNonNull(accounts.get(emailAddress)).password.equals(password)) {
             _loginMessage.setValue("wrong password");
             return false;
         }
