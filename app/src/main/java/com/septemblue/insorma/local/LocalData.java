@@ -34,7 +34,7 @@ public class LocalData {
 
     // set checkedOut furniture only if it exist in database else throw
     void setCheckedOutFurniture(String furnitureId) {
-        if (Objects.requireNonNull(Database.furnitures.getValue()).stream().anyMatch(it -> it.id.equals(furnitureId))) {
+        if (Furniture.any(Objects.requireNonNull(Database.furnitures.getValue()), furnitureId)) {
             _checkedOutFurniture.setValue(furnitureId);
         }else {
             throw new RuntimeException("furniture does not exist");

@@ -1,5 +1,8 @@
 package com.septemblue.insorma.local;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Account {
 
     public String emailAddress;
@@ -14,5 +17,15 @@ public class Account {
         this.password = password;
     }
 
+    public static Account getAccount(HashMap<String, Account> accounts, String emailAddress) {
+        Account account = null;
+        for (Account x : accounts.values()) {
+            if (x.emailAddress.equals(emailAddress)) {
+                account = x;
+                break;
+            }
+        }
+        return account;
+    }
 
 }
