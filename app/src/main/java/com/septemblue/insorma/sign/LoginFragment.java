@@ -60,4 +60,10 @@ public class LoginFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        binding = null;
+        super.onDestroyView();
+    }
 }

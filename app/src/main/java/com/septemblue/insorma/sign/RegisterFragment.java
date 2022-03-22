@@ -54,4 +54,9 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        binding = null;
+        super.onDestroyView();
+    }
 }
