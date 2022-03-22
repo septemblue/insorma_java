@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="loginViewModel"
+            type="com.septemblue.insorma.sign.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".sign.LoginFragment">
+
+        <EditText
+            android:id="@+id/login_email_address"
+            android:layout_width="234dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="52dp"
+            android:hint="@string/email_address_hint"
+            android:inputType="textEmailAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="234dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/password_hint"
+            android:inputType="textVisiblePassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_email_address" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="90dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/login_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_password" />
+
+        <Button
+            android:id="@+id/login_register_button"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/register_button"
+            app:layout_constraintStart_toEndOf="@+id/login_button"
+            app:layout_constraintTop_toBottomOf="@+id/login_password" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
