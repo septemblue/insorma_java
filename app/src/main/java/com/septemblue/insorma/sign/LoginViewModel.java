@@ -43,7 +43,6 @@ public class LoginViewModel extends ViewModel {
     // 2. if the password same as the account
     private boolean validate(String emailAddress, String password) {
         HashMap<String, Account> accounts = Database.accounts.getValue();
-        Log.i("loger", String.valueOf(accounts.get(emailAddress).password));
         if (!accounts.containsKey(emailAddress)) {
             _loginMessage.setValue("email not found");
             return false;

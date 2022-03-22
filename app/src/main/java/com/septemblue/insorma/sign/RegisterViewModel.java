@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModel;
 import com.septemblue.insorma.local.Account;
 import com.septemblue.insorma.local.Database;
 
+import java.util.Map;
+import java.util.function.Predicate;
+
 public class RegisterViewModel extends ViewModel {
 
     //message for register fragment
@@ -23,7 +26,7 @@ public class RegisterViewModel extends ViewModel {
             EditText phoneNumber,
             EditText password
     ) {
-        if (privateIsEmpty(emailAddress, username, phoneNumber, password)) {
+        if (privateIsBlank(emailAddress, username, phoneNumber, password)) {
             _registerMessage.setValue("All fields must be filled");
             return;
         }
@@ -58,20 +61,30 @@ public class RegisterViewModel extends ViewModel {
         } else if (Database.accounts.getValue().containsKey(emailAddress)) {
             _registerMessage.setValue("email address already exist");
             return false;
-        } else if (Database.accounts.getValue().values().stream().anyMatch(it -> it.username.equals(username))) {
+        } else if (Database.accounts.getValue().values().stream()) {
             _registerMessage.setValue("username already exist");
+            privateAny(it -> it.username.equals(username));
             return false;
         }
         return true;
     }
 
-    // because so many things to check, i want to shorten with varargs XD
-    private boolean privateIsEmpty(EditText ... args) {
+    // private methods to implement somehting not exist in api 23 or java
+    private boolean privateIsBlank(EditText ... args) {
         for (EditText it : args) {
             if (it.getText().toString().trim().isEmpty()) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean privateAny(Predicate<Account> x) {
+        boolean exist = false;
+        for (Map.Entry<String, Account> set : Database.accounts.getValue().entrySet()) {
+            if (x.test(set.getValue())) {
+                exist = true;
+            }
+        }
     }
 }
