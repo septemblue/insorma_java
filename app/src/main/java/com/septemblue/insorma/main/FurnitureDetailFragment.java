@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentFurnitureDetailBinding;
@@ -27,6 +28,12 @@ public class FurnitureDetailFragment extends Fragment {
 
     private FurnitureDetailViewModel viewModel;
     private FragmentFurnitureDetailBinding binding;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,6 +51,9 @@ public class FurnitureDetailFragment extends Fragment {
 
         binding.furnitureDetailBuyButton.setOnClickListener(it -> {
             viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedOutFurniture);
+            viewModel.furnitureDetailMessage.observe(getViewLifecycleOwner(), newValue -> {
+                Toast.makeText(getContext(), newValue, Toast.LENGTH_SHORT).show();
+            });
         });
         return view;
     }

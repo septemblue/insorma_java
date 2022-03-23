@@ -17,7 +17,7 @@ public class LocalData {
 
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
     public static void setLoggedUser(String userEmail) {
-        if (Objects.requireNonNull(Database.accounts.getValue()).containsKey(userEmail)) {
+        if (Objects.requireNonNull(Database.accounts.getValue()).containsKey(userEmail) || userEmail.equals("")) {
             _loggedUser.setValue(userEmail);
         } else {
             throw new RuntimeException("user does not exist");

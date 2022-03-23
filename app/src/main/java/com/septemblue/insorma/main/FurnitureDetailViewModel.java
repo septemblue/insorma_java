@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class FurnitureDetailViewModel extends ViewModel {
+    private static int transId = 0;
     private MutableLiveData<String> _furnitureDetailMessage = new MutableLiveData<>("");
     LiveData<String> furnitureDetailMessage = _furnitureDetailMessage;
 
@@ -21,9 +22,9 @@ public class FurnitureDetailViewModel extends ViewModel {
         boolean valid = validate(quantity);
 
         if (valid) {
-            History.transId += 1;
+            transId += 1;
             Objects.requireNonNull(Database.transactionHistory.getValue())
-                    .add(new History(quantity, checkedOutFurniture, checkedOutFurniture.price * quantity, Calendar.getInstance().getTime()));
+                    .add(new History(transId, quantity, checkedOutFurniture, checkedOutFurniture.price * quantity, Calendar.getInstance().getTime()));
         }
     }
 

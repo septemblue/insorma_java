@@ -95,9 +95,9 @@ public class TransactionHistoryFragment extends Fragment {
 
             Vector<History> histories = Database.transactionHistory.getValue();
 
-            transId.setText(histories.get(position).transId);
+            transId.setText(String.format("%d", histories.get(position).transId));
             transFurnitureTitle.setText(histories.get(position).furniture.title);
-            transFurnitureQuantity.setText(histories.get(position).quantity);
+            transFurnitureQuantity.setText(String.format("%d", histories.get(position).quantity));
             transFurniturePrice.setText(String.format("Rp. %s", histories.get(position).totalPrice));
             transDate.setText(histories.get(position).transDate.toString());
 
