@@ -6,9 +6,9 @@
         android:icon="@drawable/baseline_home_black_24dp"
         android:title="Home"
         app:showAsAction="always"/>
-    <!--        <item-->
-    <!--            android:id="@+id/transactonHistoryFragment"-->
-    <!--            android:icon="@drawable/baseline_receipt_black_24dp"-->
-    <!--            android:title="TransactionHistory"-->
-    <!--            app:showAsAction="always"/>-->
+    <item
+        android:id="@+id/transactionHistoryFragment"
+        android:icon="@drawable/baseline_receipt_black_24dp"
+        android:title="TransactionHistory"
+        app:showAsAction="always"/>
 </menu>

@@ -15,4 +15,9 @@
         android:name="com.septemblue.insorma.main.FurnitureDetailFragment"
         android:label="Furniture Detail"
         tools:layout="@layout/fragment_furniture_detail" />
+    <fragment
+        android:id="@+id/transactionHistoryFragment"
+        android:name="com.septemblue.insorma.main.TransactionHistoryFragment"
+        android:label="Transaction History"
+        tools:layout="@layout/fragment_transaction_history" />
 </navigation>

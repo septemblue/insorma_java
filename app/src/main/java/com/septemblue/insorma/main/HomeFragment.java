@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
             furniturePrice.setText(String.format("Rp. %s", furnitures.get(position).price));
 
             furnitureDetail.setOnClickListener(it -> {
-                LocalData.setLoggedUser(furnitureId);
+                LocalData.setCheckedOutFurniture(furnitureId);
                 Navigation.findNavController(adapterView).navigate(R.id.furnitureDetailFragment);
             });
 

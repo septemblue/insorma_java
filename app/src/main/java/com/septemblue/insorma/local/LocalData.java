@@ -28,12 +28,12 @@ public class LocalData {
     static LiveData<String> checkedOutFurniture;
 
     // return immutable live data
-    static LiveData<String> getCheckedOutFurniture() {
+    public static LiveData<String> getCheckedOutFurniture() {
         return _checkedOutFurniture;
     }
 
     // set checkedOut furniture only if it exist in database else throw
-    void setCheckedOutFurniture(String furnitureId) {
+    public static void setCheckedOutFurniture(String furnitureId) {
         if (Furniture.any(Objects.requireNonNull(Database.furnitures.getValue()), furnitureId)) {
             _checkedOutFurniture.setValue(furnitureId);
         }else {
