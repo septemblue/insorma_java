@@ -1,13 +1,11 @@
 package com.septemblue.insorma.sign;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -20,10 +18,7 @@ import android.widget.Toast;
 import com.septemblue.insorma.MainActivity;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentLoginBinding;
-import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.LocalData;
 
-import kotlin.Lazy;
 
 public class LoginFragment extends Fragment {
 
@@ -60,6 +55,7 @@ public class LoginFragment extends Fragment {
         viewModel.logged.observe(getViewLifecycleOwner(), newValue -> {
             if (newValue) {
                 Intent toMainActivity = new Intent(this.getContext(), MainActivity.class);
+                toMainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(toMainActivity);
             }
         });
