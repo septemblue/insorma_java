@@ -21,6 +21,6 @@ public class Database {
     {{ put("admin", admin);}});
 
     public static MutableLiveData<ArrayList<Furniture>> furnitures = new MutableLiveData<>(new ArrayList<>(example));
-    public static MutableLiveData<Vector<History>> history = new MutableLiveData<>(new Vector<>());
+    public static MutableLiveData<Vector<History>> transactionHistory = new MutableLiveData<>(new Vector<>());
 }
 

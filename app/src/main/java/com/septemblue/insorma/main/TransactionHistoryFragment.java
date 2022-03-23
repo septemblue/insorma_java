@@ -66,7 +66,7 @@ public class TransactionHistoryFragment extends Fragment {
 
         @Override
         public int getCount() {
-            int total = Objects.requireNonNull(Database.history.getValue()).size();
+            int total = Objects.requireNonNull(Database.transactionHistory.getValue()).size();
             if (total != 0) return total;
             else {
                 Toast.makeText(context, "There are no transaction data", Toast.LENGTH_SHORT).show();
@@ -93,12 +93,12 @@ public class TransactionHistoryFragment extends Fragment {
             TextView transDate = adapterView.findViewById(R.id.transaction_history_furniture_date);
             TextView transFurnitureQuantity = adapterView.findViewById(R.id.transaction_history_furniture_quantity);
 
-            Vector<History> histories = Database.history.getValue();
+            Vector<History> histories = Database.transactionHistory.getValue();
 
             transId.setText(histories.get(position).transId);
             transFurnitureTitle.setText(histories.get(position).furniture.title);
             transFurnitureQuantity.setText(histories.get(position).quantity);
-            transFurniturePrice.setText(String.format("Rp. %d", histories.get(position).totalPrice));
+            transFurniturePrice.setText(String.format("Rp. %s", histories.get(position).totalPrice));
             transDate.setText(histories.get(position).transDate.toString());
 
             return adapterView;

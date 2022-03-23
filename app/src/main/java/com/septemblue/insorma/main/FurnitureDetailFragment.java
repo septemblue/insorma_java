@@ -2,6 +2,7 @@ package com.septemblue.insorma.main;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,15 +14,36 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.septemblue.insorma.R;
+import com.septemblue.insorma.databinding.FragmentFurnitureDetailBinding;
+import com.septemblue.insorma.local.Database;
+import com.septemblue.insorma.local.Furniture;
+import com.septemblue.insorma.local.LocalData;
+
+import java.util.Objects;
 
 public class FurnitureDetailFragment extends Fragment {
 
-    private FurnitureDetailViewModel mViewModel;
+    private FurnitureDetailViewModel viewModel;
+    private FragmentFurnitureDetailBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_furniture_detail, container, false);
+        binding = FragmentFurnitureDetailBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        viewModel = new ViewModelProvider(this).get(FurnitureDetailViewModel.class);
+        Furniture checkedOutFurniture = Furniture.getFurniture(Database.furnitures.getValue(), LocalData.getCheckedOutFurniture().getValue());
+
+        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(checkedOutFurniture.title);
+
+        binding.furnitureDetailImage.setImageResource(checkedOutFurniture.imageSource);
+        binding.furnitureDetailTitle.setText(checkedOutFurniture.title);
+        binding.furnitureDetailPrice.setText(String.format("Rp. %s", checkedOutFurniture.price));
+
+        binding.furnitureDetailBuyButton.setOnClickListener(it -> {
+            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedOutFurniture);
+        });
+        return view;
     }
 
 }
