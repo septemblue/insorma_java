@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.septemblue.insorma.MainActivity;
+import com.septemblue.insorma.main.MainActivity;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentLoginBinding;
 
@@ -31,7 +31,7 @@ public class LoginFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                this.isEnabled();
+
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
