@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,6 +46,13 @@ public class FurnitureDetailFragment extends Fragment {
             viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedOutFurniture);
         });
         return view;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        MenuItem item = menu.findItem(R.id.toolbar_username);
+        item.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 
 }
