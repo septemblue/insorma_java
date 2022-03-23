@@ -3,10 +3,10 @@ package com.septemblue.insorma.local;
 import java.util.ArrayList;
 
 public class Furniture {
-    String id;
-    int imageSource;
-    String title;
-    int price;
+    public String id;
+    public int imageSource;
+    public String title;
+    public int price;
 
     public Furniture(String id, int imageSource, String title, int price) {
         this.id = id;
