@@ -41,7 +41,16 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration.Builder builder = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.transactionHistoryFragment);
         AppBarConfiguration appBarConfiguration = builder.build();
         NavigationUI.setupWithNavController(binding.mainToolbar, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.mainBottomNav, navController);
+
+        binding.mainBottomNav.setOnItemSelectedListener(it -> {
+            if (it.getItemId() == R.id.homeFragment) {
+                Navigation.findNavController(this, R.id.main_nav_host_fragment).navigate(R.id.homeFragment);
+                return true;
+            } else if (it.getItemId() == R.id.transactionHistoryFragment) {
+                Navigation.findNavController(this, R.id.main_nav_host_fragment).navigate(R.id.transactionHistoryFragment);
+                return true;
+            }else return false;
+        });
     }
 
     // todo on option menu
