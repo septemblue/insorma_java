@@ -1,0 +1,4 @@
+todo ubah listview ke recycler view
+todo pasang ke home fragment (done)
+todo buat item adapternya sama diffcallback (done)
+todo buat furnitures item untuk view holder (done)
