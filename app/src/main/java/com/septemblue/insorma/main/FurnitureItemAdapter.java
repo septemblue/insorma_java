@@ -1,5 +1,6 @@
 package com.septemblue.insorma.main;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +16,24 @@ import com.septemblue.insorma.local.Furniture;
 import kotlin.Unit;
 
 public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAdapter.FurnitureItemViewHolder>{
-    ItemClickListener clickListener;
+//    ItemClickListener clickListener;
 
-    protected FurnitureItemAdapter(ItemClickListener clickListener) {
+    protected FurnitureItemAdapter(/*ItemClickListener clickListener*/) {
         super(new FurnitureDiffCallback());
-        this.clickListener = clickListener;
+//        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public FurnitureItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.i("kudanil", "iamexist");
         return FurnitureItemViewHolder.inflateFrom(parent);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FurnitureItemViewHolder holder, int position) {
         Furniture furniture = getItem(position);
-        holder.bind(furniture, clickListener);
+        holder.bind(furniture/*,clickListener*/);
     }
 
 
@@ -46,12 +48,15 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
             binding = MainFurnitureItemBinding.inflate(layoutInflater, parent, false);
             return new FurnitureItemViewHolder(binding);
         }
-        public void bind(Furniture furniture, ItemClickListener clickListener) {
-            binding.theTxt.setText("hello");
+        public void bind(Furniture furniture/*, ItemClickListener clickListener*/) {
+            binding.furnitureImage.setImageResource(furniture.imageSource);
+            binding.furnitureTitle.setText(furniture.title);
+            binding.furniturePrice.setText(String.format("Rp: %s", furniture.price));
+//            binding.furnitureDetail.setOnClickListener((View.OnClickListener) clickListener);
         }
     }
 
     interface ItemClickListener {
-        Unit clickListener(Long furnitureId);
+        void clickListener(Long furnitureId);
     }
 }
