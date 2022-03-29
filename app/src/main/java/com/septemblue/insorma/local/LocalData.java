@@ -23,22 +23,4 @@ public class LocalData {
             throw new RuntimeException("user does not exist");
         }
     }
-
-    private static MutableLiveData<String> _checkedOutFurniture = new MutableLiveData<>("");
-    static LiveData<String> checkedOutFurniture;
-
-    // return immutable live data
-    public static LiveData<String> getCheckedOutFurniture() {
-        return _checkedOutFurniture;
-    }
-
-    // set checkedOut furniture only if it exist in database else throw
-    public static void setCheckedOutFurniture(String furnitureId) {
-        if (Furniture.any(Objects.requireNonNull(Database.furnitures.getValue()), furnitureId)) {
-            _checkedOutFurniture.setValue(furnitureId);
-        }else {
-            throw new RuntimeException("furniture does not exist");
-        }
-    }
-
 }
