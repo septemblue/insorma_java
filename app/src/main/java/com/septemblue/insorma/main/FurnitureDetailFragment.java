@@ -41,7 +41,8 @@ public class FurnitureDetailFragment extends Fragment {
         binding = FragmentFurnitureDetailBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(FurnitureDetailViewModel.class);
-        Furniture checkedOutFurniture = Furniture.getFurniture(Database.furnitures.getValue(), FurnitureDetailFragmentArgs.fromBundle(requireArguments()).getFurnitureId());
+        Furniture checkedOutFurniture = Furniture
+                .getFurniture(Database.furnitures.getValue(), FurnitureDetailFragmentArgs.fromBundle(requireArguments()).getFurnitureId());
         Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(checkedOutFurniture.title);
 
         binding.furnitureDetailImage.setImageResource(checkedOutFurniture.imageSource);

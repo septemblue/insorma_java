@@ -11,7 +11,7 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/layout/fragment_transaction_history.xml" value="0.25677083333333334" />
-        <entry key="app/src/main/res/layout/main_furniture_item.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/main_furniture_item.xml" value="0.45" />
         <entry key="app/src/main/res/layout/main_furnitures_listview.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/transaction_history_listview.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25677083333333334" />

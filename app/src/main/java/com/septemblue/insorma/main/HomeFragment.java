@@ -55,9 +55,13 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         FurnitureItemAdapter adapter = new FurnitureItemAdapter();
-        adapter.submitList(Database.furnitures.getValue());
+        if (Database.furnitures.getValue().size() != 0) {
+            adapter.submitList(Database.furnitures.getValue());
+        } else {
+            binding.noFurniture.setText("There are no furniture");
+            Snackbar.make(view, "There are no furniture", Snackbar.LENGTH_SHORT).show();
+        }
         binding.furnitureList.setAdapter(adapter);
-        binding.furnitureList.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.HORIZONTAL, false));
         return view;
     }
 

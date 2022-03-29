@@ -15,6 +15,7 @@ public class Database {
     {{
         add(new Furniture("SM42", R.drawable.sepatu, "Sepatu merah", 42000));
         add(new Furniture("CJ25", R.drawable.cleana_jeans, "Celana Jeans", 25000));
+        add(new Furniture("BJ30", R.drawable.baju, "Baju Polos", 30000));
     }};
 
     public static MutableLiveData<HashMap<String, Account>> accounts = new MutableLiveData<>(new HashMap<String, Account>()
