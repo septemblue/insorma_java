@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +58,8 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
 //          Here should only contain view logic, but passing 2 paremeter for OnClicklistener by lambda still confused me
 //          so for now i just implement business logic here hahaha. i'll improve later
             binding.furnitureDetail.setOnClickListener(it -> {
+                HomeFragmentDirections.FurnitureMoreDetail action = HomeFragmentDirections.furnitureMoreDetail(furniture.id);
+                Navigation.findNavController(itemView).navigate(action);
                 Toast.makeText(this.itemView.getContext(), "you clicked " + furniture.id, Toast.LENGTH_SHORT).show();
             });
         }
