@@ -54,9 +54,7 @@ public class HomeFragment extends Fragment {
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        FurnitureItemAdapter adapter = new FurnitureItemAdapter(/*furnitureId -> {
-           Toast.makeText(this.getContext(), "hello" + furnitureId, Toast.LENGTH_SHORT).show();
-        })*/);
+        FurnitureItemAdapter adapter = new FurnitureItemAdapter();
         adapter.submitList(Database.furnitures.getValue());
         binding.furnitureList.setAdapter(adapter);
         binding.furnitureList.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.HORIZONTAL, false));

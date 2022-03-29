@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -16,11 +17,9 @@ import com.septemblue.insorma.local.Furniture;
 import kotlin.Unit;
 
 public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAdapter.FurnitureItemViewHolder>{
-//    ItemClickListener clickListener;
 
-    protected FurnitureItemAdapter(/*ItemClickListener clickListener*/) {
+    protected FurnitureItemAdapter() {
         super(new FurnitureDiffCallback());
-//        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -33,7 +32,7 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
     @Override
     public void onBindViewHolder(@NonNull FurnitureItemViewHolder holder, int position) {
         Furniture furniture = getItem(position);
-        holder.bind(furniture/*,clickListener*/);
+        holder.bind(furniture);
     }
 
 
@@ -43,20 +42,22 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
         public FurnitureItemViewHolder(@NonNull MainFurnitureItemBinding binding) {
             super(binding.getRoot());
         }
+
         static FurnitureItemViewHolder inflateFrom(ViewGroup parent) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             binding = MainFurnitureItemBinding.inflate(layoutInflater, parent, false);
             return new FurnitureItemViewHolder(binding);
         }
-        public void bind(Furniture furniture/*, ItemClickListener clickListener*/) {
+
+        public void bind(Furniture furniture) {
             binding.furnitureImage.setImageResource(furniture.imageSource);
             binding.furnitureTitle.setText(furniture.title);
             binding.furniturePrice.setText(String.format("Rp: %s", furniture.price));
-//            binding.furnitureDetail.setOnClickListener((View.OnClickListener) clickListener);
+//          Here should only contain view logic, but passing 2 paremeter for OnClicklistener by lambda still confused me
+//          so for now i just implement business logic here hahaha. i'll improve later
+            binding.furnitureDetail.setOnClickListener(it -> {
+                Toast.makeText(this.itemView.getContext(), "you clicked " + furniture.id, Toast.LENGTH_SHORT).show();
+            });
         }
-    }
-
-    interface ItemClickListener {
-        void clickListener(Long furnitureId);
     }
 }
