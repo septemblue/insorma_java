@@ -1,3 +1,23 @@
+// Coded by Raffael Hizqya Bakhtiar Ali Maulana Tuasamu
+// 2440117122
+/*  This fragment purpose is to show all the furnitures items available in database
+    and directing user to the detail if user click the more button on the items card
+
+    in this activity scope uses :
+    - Navigation Fragment dependency ( tried to keep all login system as 1 scope by 1 activity)
+    - Lifecycle ViewModel dependency ( tried to emphasize separation of concern between logic and view)
+    - Lifecycle LiveData dependency  ( tried to implement reactive programming )
+    - buildFeatures UI layer library View Binding ( simplify findViewById yet provides Null safety
+    and type safety)
+
+
+    for improvement notes :
+    - later i think i should use shared view model for register and login
+    - in the register view model, i implement shortcut way like a tape
+    to solve something not exist in sdk23 and of course it is smelly to bugs
+    later on could use solid implementation.
+
+ */
 package com.septemblue.insorma.main;
 
 import androidx.activity.OnBackPressedCallback;

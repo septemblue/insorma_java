@@ -5,14 +5,6 @@
     if the user doesn't have an account they can go to
     register fragment to register
 
-    in this activity scope uses :
-    - Navigation Fragment dependency ( tried to keep all login system as 1 scope by 1 activity)
-    - Lifecycle ViewModel dependency ( tried to emphasize separation of concern between logic and view)
-    - Lifecycle LiveData dependency  ( tried to implement reactive programming )
-    - buildFeatures UI layer library View Binding ( simplify findViewById yet provides Null safety
-    and type safety)
-
-
     for improvement notes :
     - later i think i should use shared view model for register and login
     - here i handle the backpressed hardware button, so the user can't go back to main page
