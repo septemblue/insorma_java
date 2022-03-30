@@ -20,6 +20,7 @@ import kotlin.Unit;
 
 public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAdapter.FurnitureItemViewHolder>{
 
+    // to update it's layout and data whenever the database changed, using DiffUtilCallback
     protected FurnitureItemAdapter() {
         super(new FurnitureDiffCallback());
     }
@@ -27,30 +28,33 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
     @NonNull
     @Override
     public FurnitureItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.i("kudanil", "iamexist");
+        // give the view
         return FurnitureItemViewHolder.inflateFrom(parent);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FurnitureItemViewHolder holder, int position) {
+        // bind the view
         Furniture furniture = getItem(position);
         holder.bind(furniture);
     }
 
-
+    // this class used only to control all the view logic
     static class FurnitureItemViewHolder extends RecyclerView.ViewHolder {
         static MainFurnitureItemBinding binding;
 
+        // getting the layout root
         public FurnitureItemViewHolder(@NonNull MainFurnitureItemBinding binding) {
             super(binding.getRoot());
         }
-
+        // give the inflated object
         static FurnitureItemViewHolder inflateFrom(ViewGroup parent) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             binding = MainFurnitureItemBinding.inflate(layoutInflater, parent, false);
             return new FurnitureItemViewHolder(binding);
         }
-
+        // binding, here i use non view logic here and should be improved later
+        // but in kotlin project i already work all of the improvements in this project
         public void bind(Furniture furniture) {
             binding.furnitureImage.setImageResource(furniture.imageSource);
             binding.furnitureTitle.setText(furniture.title);

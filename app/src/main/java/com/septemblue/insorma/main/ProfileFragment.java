@@ -1,3 +1,14 @@
+// Coded by Raffael Hizqya Bakhtiar Ali Maulana Tuasamu
+// 2440117122
+/*  This fragment purpose is to show all the profile data, edit the profile
+    or delete the account. It also used for signing out from the main page.
+
+    for improvement notes :
+    - here i still used non view logic and should be implemented in view model
+    i will update it when the project permitted to access database
+    - i haven't completely implement reactive programmng
+
+ */
 package com.septemblue.insorma.main;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -22,12 +33,13 @@ import com.septemblue.insorma.local.Account;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.LocalData;
 import com.septemblue.insorma.sign.SignActivity;
-
+// please read note above package
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel viewModel;
     private FragmentProfileBinding binding;
 
+    // has option menu
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +49,20 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // binding + view model
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
+        // get the account from cache
         Account user = Database.accounts.getValue().get(LocalData.getLoggedUser().getValue());
 
+        // give layout profile data
         binding.profileUsername.setText(user.username);
         binding.profileEmailAddress.setText(user.emailAddress);
         binding.profilePhoneNumber.setText(user.phoneNumber);
 
+        // button to edit username
         binding.profileEditButton.setOnClickListener(it -> {
             binding.profileUsername.setVisibility(View.INVISIBLE);
             binding.profileEditUsername.setVisibility(View.VISIBLE);
@@ -54,6 +70,7 @@ public class ProfileFragment extends Fragment {
             binding.profileSaveButton.setVisibility(View.VISIBLE);
         });
 
+        // save the edit value and give notification
         binding.profileSaveButton.setOnClickListener(it -> {
             viewModel.editUsername(binding.profileEditUsername, Database.accounts.getValue(), user);
             viewModel.usernameChanged.observe(getViewLifecycleOwner(), newValue -> {
@@ -68,6 +85,7 @@ public class ProfileFragment extends Fragment {
             binding.profileEditButton.setVisibility(View.VISIBLE);
         });
 
+        // button to delete account and redirect to sign activity
         binding.profileDeleteAccount.setOnClickListener(it -> {
             viewModel.deleteAccount(Database.accounts.getValue(), user);
             Toast.makeText(getContext(), viewModel.profileMessage.getValue(), Toast.LENGTH_SHORT).show();
@@ -81,6 +99,7 @@ public class ProfileFragment extends Fragment {
             });
         });
 
+        // button for clear logged cache and redirect to sign activity
         binding.profileLogOut.setOnClickListener(it -> {
             LocalData.setLoggedUser("");
             Intent toSignActivity = new Intent(this.getContext(), SignActivity.class);
@@ -91,6 +110,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    // hide profile icon
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         MenuItem item = menu.findItem(R.id.profileFragment);

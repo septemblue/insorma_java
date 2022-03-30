@@ -3,19 +3,11 @@
 /*  This fragment purpose is to show all the furnitures items available in database
     and directing user to the detail if user click the more button on the items card
 
-    in this activity scope uses :
-    - Navigation Fragment dependency ( tried to keep all login system as 1 scope by 1 activity)
-    - Lifecycle ViewModel dependency ( tried to emphasize separation of concern between logic and view)
-    - Lifecycle LiveData dependency  ( tried to implement reactive programming )
-    - buildFeatures UI layer library View Binding ( simplify findViewById yet provides Null safety
-    and type safety)
-
-
     for improvement notes :
-    - later i think i should use shared view model for register and login
-    - in the register view model, i implement shortcut way like a tape
-    to solve something not exist in sdk23 and of course it is smelly to bugs
-    later on could use solid implementation.
+    - later i think i should implement more shared view model
+    - i used staggeredGrid layout manager to display the furnitures, but i should've use
+    linear horizontal like commit on 29 march, and get more linear recycle view for each
+    furniture category
 
  */
 package com.septemblue.insorma.main;
@@ -52,12 +44,14 @@ import com.septemblue.insorma.local.LocalData;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
+// please read note above package
 public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* handle the back press hardware button
+        to prevent back to login without sign out or delete account */
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -70,10 +64,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // View binding + view model
         HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // create the adapter for home recycler view
+        // give adapter the list if not empty or give empty warning
         FurnitureItemAdapter adapter = new FurnitureItemAdapter();
         if (Database.furnitures.getValue().size() != 0) {
             adapter.submitList(Database.furnitures.getValue());
@@ -81,6 +78,8 @@ public class HomeFragment extends Fragment {
             binding.noFurniture.setText("There are no furniture");
             Snackbar.make(view, "There are no furniture", Snackbar.LENGTH_SHORT).show();
         }
+
+        // set the adapter
         binding.furnitureList.setAdapter(adapter);
         return view;
     }

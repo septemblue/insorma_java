@@ -1,3 +1,13 @@
+// Coded by Raffael Hizqya Bakhtiar Ali Maulana Tuasamu
+// 2440117122
+/*  This fragment purpose is to show all history of transactions done by user
+    from the database.
+
+    for improvement notes :
+    - maybe in later improvement i will use recycler view, but here i jsut want to
+    try listView
+
+ */
 package com.septemblue.insorma.main;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -27,7 +37,7 @@ import com.septemblue.insorma.local.History;
 
 import java.util.Objects;
 import java.util.Vector;
-
+// please read note above package
 public class TransactionHistoryFragment extends Fragment {
 
     private TransactionHistoryViewModel viewModel;

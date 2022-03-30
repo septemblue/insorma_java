@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.septemblue.insorma.R;
-
+// please read note above package
 public class SignActivity extends AppCompatActivity {
 
     @Override

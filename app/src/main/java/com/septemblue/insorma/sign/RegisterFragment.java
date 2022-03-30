@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentRegisterBinding;
-
+// please read note above package
 public class RegisterFragment extends Fragment {
 
     private RegisterViewModel viewModel;

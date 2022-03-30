@@ -33,7 +33,7 @@ import com.septemblue.insorma.main.MainActivity;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentLoginBinding;
 
-
+// please read note above package
 public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;

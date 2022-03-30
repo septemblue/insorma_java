@@ -13,10 +13,14 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class FurnitureDetailViewModel extends ViewModel {
+    // has static id that will to show how many transactions already done
     private static int transId = 0;
+
+    // message live data
     private MutableLiveData<String> _furnitureDetailMessage = new MutableLiveData<>("");
     LiveData<String> furnitureDetailMessage = _furnitureDetailMessage;
 
+    // function to buy, only buy when validation is succeeded
     public void buy(String mQuantity, Furniture checkedOutFurniture) {
         int quantity = Integer.parseInt(mQuantity);
         boolean valid = validate(quantity);
@@ -28,6 +32,7 @@ public class FurnitureDetailViewModel extends ViewModel {
         }
     }
 
+    // validate the quantity
     private boolean validate(int quantity) {
         if (quantity <= 0) {
             _furnitureDetailMessage.setValue("Quantity must greater than 0");

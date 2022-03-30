@@ -14,6 +14,9 @@ import java.util.HashMap;
 
 public class ProfileViewModel extends ViewModel {
 
+    // get live datas for reactive programming
+    // when account deleted, username changed, and new message notificiation
+    // outsider only can access the live data, so only this view model can change the value
     private MutableLiveData<Boolean> _accountDeleted = new MutableLiveData<>(false);
     LiveData<Boolean> accountDeleted = _accountDeleted;
 
@@ -23,7 +26,7 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> _profileMessage = new MutableLiveData<>("");
     LiveData<String> profileMessage = _profileMessage;
 
-
+    // edit the username if validation succeeded
     public void editUsername(EditText newUsername, HashMap<String, Account> accounts, Account user) {
         boolean valid = validate(newUsername.getText().toString(), accounts);
         if (valid) {

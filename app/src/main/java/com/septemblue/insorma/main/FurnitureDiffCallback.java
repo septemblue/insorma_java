@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import com.septemblue.insorma.local.Furniture;
 
+// DiffUtilCallback from Recycler view to track layout changes
 public class FurnitureDiffCallback extends DiffUtil.ItemCallback<Furniture> {
     @Override
     public boolean areItemsTheSame(@NonNull Furniture oldItem, @NonNull Furniture newItem) {
