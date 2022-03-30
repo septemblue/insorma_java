@@ -1,3 +1,0 @@
-todo ubah listview ke recycler view
-todo pasang adapter ke home fragment
-
