@@ -1,3 +1,25 @@
+// Coded by Raffael Hizqya Bakhtiar Ali Maulana Tuasamu
+// 2440117122
+/*  This fragment purpose is authenticate registered user
+    by giving email address and password
+    if the user doesn't have an account they can go to
+    register fragment to register
+
+    in this context uses :
+    - Navigation Fragment dependency ( tried to keep all login system as 1 scope by 1 activity)
+    - Lifecycle ViewModel dependency ( tried to emphasize separation of concern between logic and view)
+    - Lifecycle LiveData dependency  ( tried to implement reactive programming )
+    - buildFeatures UI layer library View Binding ( simplify findViewById yet provides Null safety
+    and type safety)
+
+
+    for improvement notes :
+    - later i think i should use shared view model for register and login
+    - here i handle the backpressed hardware button, so the user can't go back to main page
+    after signing out, but this is just a shortcut way to solve like a tape, i should make
+    main page always validate the user logged cache
+
+ */
 package com.septemblue.insorma.sign;
 
 import android.content.Intent;
@@ -28,6 +50,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Handle the back press hardware button, so the user can't go back to main page
+        // after signing out
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -51,6 +75,7 @@ public class LoginFragment extends Fragment {
             // Give login notification
             viewModel.logged.observe(getViewLifecycleOwner(), newValue -> Toast.makeText(getActivity(), viewModel.loginMessage.getValue(), Toast.LENGTH_SHORT).show());
         });
+
         // navigate if succeed
         viewModel.logged.observe(getViewLifecycleOwner(), newValue -> {
             if (newValue) {
