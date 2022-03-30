@@ -1,8 +1,7 @@
 // Coded by Raffael Hizqya Bakhtiar Ali Maulana Tuasamu
 // 2440117122
-/*  This fragment purpose is to register user to the database by taking
-    all the credentials needed, and user can go back to login to enjoy
-    main page
+/*  This activity purpose is to register user to the database
+    and directing user to main page by validate the user
 
     in this activity scope uses :
     - Navigation Fragment dependency ( tried to keep all login system as 1 scope by 1 activity)
