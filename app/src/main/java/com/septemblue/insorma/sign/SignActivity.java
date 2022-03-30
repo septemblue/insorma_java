@@ -13,10 +13,6 @@
 
 
     for improvement notes :
-    - later i think i should use shared view model for register and login
-    - in the register view model, i implement shortcut way like a tape
-    to solve something not exist in sdk23 and of course it is smelly to bugs
-    later on could use solid implementation.
 
  */
 package com.septemblue.insorma.sign;
