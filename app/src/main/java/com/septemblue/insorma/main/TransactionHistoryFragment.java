@@ -10,8 +10,6 @@
  */
 package com.septemblue.insorma.main;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,9 +28,8 @@ import android.widget.Toast;
 
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentTransactionHistoryBinding;
-import com.septemblue.insorma.local.Account;
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.History;
+import com.septemblue.insorma.local.Transaction;
 
 import java.util.Objects;
 import java.util.Vector;
@@ -103,10 +99,10 @@ public class TransactionHistoryFragment extends Fragment {
             TextView transDate = adapterView.findViewById(R.id.transaction_history_furniture_date);
             TextView transFurnitureQuantity = adapterView.findViewById(R.id.transaction_history_furniture_quantity);
 
-            Vector<History> histories = Database.transactionHistory.getValue();
+            Vector<Transaction> histories = Database.transactionHistory.getValue();
 
             transId.setText(String.format("%d", histories.get(position).transId));
-            transFurnitureTitle.setText(histories.get(position).furniture.title);
+            transFurnitureTitle.setText(histories.get(position).product.title);
             transFurnitureQuantity.setText(String.format("%d", histories.get(position).quantity));
             transFurniturePrice.setText(String.format("Rp. %s", histories.get(position).totalPrice));
             transDate.setText(histories.get(position).transDate.toString());

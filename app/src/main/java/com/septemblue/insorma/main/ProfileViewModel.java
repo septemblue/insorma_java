@@ -6,9 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.septemblue.insorma.local.Account;
-import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.LocalData;
+import com.septemblue.insorma.local.Users;
 
 import java.util.HashMap;
 
@@ -27,7 +25,7 @@ public class ProfileViewModel extends ViewModel {
     LiveData<String> profileMessage = _profileMessage;
 
     // edit the username if validation succeeded
-    public void editUsername(EditText newUsername, HashMap<String, Account> accounts, Account user) {
+    public void editUsername(EditText newUsername, HashMap<String, Users> accounts, Users user) {
         boolean valid = validate(newUsername.getText().toString(), accounts);
         if (valid) {
             _usernameChanged.setValue(true);
@@ -35,15 +33,15 @@ public class ProfileViewModel extends ViewModel {
         }
     }
 
-    private void _editUsername(String newUsername, Account user) {
+    private void _editUsername(String newUsername, Users user) {
         user.username = newUsername;
     }
 
-    private boolean validate(String newUsername, HashMap<String, Account> accounts) {
+    private boolean validate(String newUsername, HashMap<String, Users> accounts) {
         if (newUsername.length() < 3 || newUsername.length() > 20) {
             _profileMessage.setValue("username must between 3 and 20 character");
             return false;
-        } else if (Account.any(accounts, newUsername)) {
+        } else if (Users.any(accounts, newUsername)) {
             _profileMessage.setValue("username already exist");
             return false;
         }
@@ -51,7 +49,7 @@ public class ProfileViewModel extends ViewModel {
         return true;
     }
 
-    public boolean deleteAccount(HashMap<String, Account> accounts, Account user) {
+    public boolean deleteAccount(HashMap<String, Users> accounts, Users user) {
         boolean deleted = _deleteAccount(accounts, user);
         if (deleted) {
             _profileMessage.setValue("Account Deleted");
@@ -61,7 +59,7 @@ public class ProfileViewModel extends ViewModel {
         return false;
     }
 
-    private boolean _deleteAccount(HashMap<String, Account> accounts, Account user) {
+    private boolean _deleteAccount(HashMap<String, Users> accounts, Users user) {
         if (accounts.containsValue(user)) {
             accounts.remove(user.emailAddress);
             _accountDeleted.setValue(true);

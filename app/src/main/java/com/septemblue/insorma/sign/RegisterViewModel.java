@@ -1,18 +1,13 @@
 package com.septemblue.insorma.sign;
 
-import android.os.Build;
 import android.widget.EditText;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.septemblue.insorma.local.Account;
+import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.local.Database;
-
-import java.util.Map;
-import java.util.function.Predicate;
 
 public class RegisterViewModel extends ViewModel {
 
@@ -37,9 +32,9 @@ public class RegisterViewModel extends ViewModel {
     }
 
     private void _register(String emailAddress, String username, String password) {
-        Account newAccount = new Account(emailAddress, username, password);
-        newAccount.password = password;
-        Database.accounts.getValue().put(emailAddress, newAccount);
+        Users newUsers = new Users(emailAddress, username, password);
+        newUsers.password = password;
+        Database.accounts.getValue().put(emailAddress, newUsers);
         _registerMessage.setValue("Register succeed");
     }
 
@@ -61,7 +56,7 @@ public class RegisterViewModel extends ViewModel {
         } else if (Database.accounts.getValue().containsKey(emailAddress)) {
             _registerMessage.setValue("email address already exist");
             return false;
-        } else if (Account.any(Database.accounts.getValue(), username)) {
+        } else if (Users.any(Database.accounts.getValue(), username)) {
             _registerMessage.setValue("username already exist");
             return false;
         }

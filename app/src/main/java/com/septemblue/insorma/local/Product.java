@@ -2,7 +2,7 @@ package com.septemblue.insorma.local;
 
 import java.util.ArrayList;
 
-public class Furniture {
+public class Product {
     public String id;
     public int imageSource;
     public int rating;
@@ -10,7 +10,7 @@ public class Furniture {
     public String title;
     public int price;
 
-    public Furniture(String id, int imageSource, String title, int price, int rating, String description) {
+    public Product(String id, int imageSource, String title, int price, int rating, String description) {
         this.id = id;
         this.imageSource = imageSource;
         this.title = title;
@@ -19,22 +19,22 @@ public class Furniture {
         this.description = description;
     }
 
-    public static Furniture getFurniture(ArrayList<Furniture> furnitures, String id) {
-        Furniture furniture = null;
-        for (Furniture x :
-                furnitures) {
+    public static Product getFurniture(ArrayList<Product> products, String id) {
+        Product product = null;
+        for (Product x :
+                products) {
             if (x.id.equals(id)) {
-                furniture = x;
+                product = x;
                 break;
             }
         }
-        return furniture;
+        return product;
     }
 
-    public static Boolean any(ArrayList<Furniture> furnitures, String id) {
+    public static Boolean any(ArrayList<Product> products, String id) {
         boolean exist = false;
-        for (Furniture x :
-                furnitures) {
+        for (Product x :
+                products) {
             if (x.id.equals(id)) {
                 exist = true;
                 break;

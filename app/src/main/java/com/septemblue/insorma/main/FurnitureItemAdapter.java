@@ -1,24 +1,18 @@
 package com.septemblue.insorma.main;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.septemblue.insorma.databinding.MainFurnitureItemBinding;
-import com.septemblue.insorma.local.Furniture;
+import com.septemblue.insorma.local.Product;
 
-import kotlin.Unit;
-
-public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAdapter.FurnitureItemViewHolder>{
+public class FurnitureItemAdapter extends ListAdapter<Product, FurnitureItemAdapter.FurnitureItemViewHolder>{
 
     // to update it's layout and data whenever the database changed, using DiffUtilCallback
     protected FurnitureItemAdapter() {
@@ -35,8 +29,8 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
     @Override
     public void onBindViewHolder(@NonNull FurnitureItemViewHolder holder, int position) {
         // bind the view
-        Furniture furniture = getItem(position);
-        holder.bind(furniture);
+        Product product = getItem(position);
+        holder.bind(product);
     }
 
     // this class used only to control all the view logic
@@ -55,18 +49,18 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
         }
         // binding, here i use non view logic here and should be improved later
         // but in kotlin project i already work all of the improvements in this project
-        public void bind(Furniture furniture) {
-            binding.furnitureImage.setImageResource(furniture.imageSource);
-            binding.furnitureTitle.setText(furniture.title);
-            binding.furniturePrice.setText(String.format("Rp: %d", furniture.price));
-            binding.furnitureRating.setText(String.format("Rating : %d", furniture.rating));
-            binding.furnitureDescription.setText(furniture.description);
+        public void bind(Product product) {
+            binding.furnitureImage.setImageResource(product.imageSource);
+            binding.furnitureTitle.setText(product.title);
+            binding.furniturePrice.setText(String.format("Rp: %d", product.price));
+            binding.furnitureRating.setText(String.format("Rating : %d", product.rating));
+            binding.furnitureDescription.setText(product.description);
 //          Here should only contain view logic, but passing 2 paremeter for OnClicklistener by lambda still confused me
 //          so for now i just implement business logic here hahaha. i'll improve later
             binding.furnitureDetail.setOnClickListener(it -> {
-                HomeFragmentDirections.FurnitureMoreDetail action = HomeFragmentDirections.furnitureMoreDetail(furniture.id);
+                HomeFragmentDirections.FurnitureMoreDetail action = HomeFragmentDirections.furnitureMoreDetail(product.id);
                 Navigation.findNavController(itemView).navigate(action);
-                Toast.makeText(this.itemView.getContext(), "you clicked " + furniture.id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.itemView.getContext(), "you clicked " + product.id, Toast.LENGTH_SHORT).show();
             });
         }
     }

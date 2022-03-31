@@ -1,22 +1,17 @@
 package com.septemblue.insorma.sign;
 
-import android.os.Build;
-import android.util.Log;
 import android.widget.EditText;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.septemblue.insorma.local.Account;
+import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.LocalData;
+import com.septemblue.insorma.local.Cache;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Optional;
 
 public class LoginViewModel extends ViewModel {
     // can only set here when user success to login
@@ -35,14 +30,14 @@ public class LoginViewModel extends ViewModel {
             return;
         }
         boolean valid = validate(emailAddress.getText().toString(), password.getText().toString());
-        if (valid) { LocalData.setLoggedUser(emailAddress.getText().toString()); }
+        if (valid) { Cache.setLoggedUser(emailAddress.getText().toString()); }
     }
 
     // required validations
     // 1. if the account exist
     // 2. if the password same as the account
     private boolean validate(String emailAddress, String password) {
-        HashMap<String, Account> accounts = Database.accounts.getValue();
+        HashMap<String, Users> accounts = Database.accounts.getValue();
         if (!accounts.containsKey(emailAddress)) {
             _loginMessage.setValue("email not found");
             return false;

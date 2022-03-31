@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Objects;
 
-public class LocalData {
+public class Cache {
     private static MutableLiveData<String> _loggedUser = new MutableLiveData<>("");
     static LiveData<String> loggedUser;
 

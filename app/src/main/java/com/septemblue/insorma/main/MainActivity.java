@@ -35,15 +35,12 @@ package com.septemblue.insorma.main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
-import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,14 +48,14 @@ import android.view.View;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.ActivityMainBinding;
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.LocalData;
+import com.septemblue.insorma.local.Cache;
 
 import java.util.Objects;
 // please read note above package
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private final String user = LocalData.getLoggedUser().getValue();
+    private final String user = Cache.getLoggedUser().getValue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,8 @@
 package com.septemblue.insorma.local;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Account {
+public class Users {
 
     public String emailAddress;
     public String username;
@@ -11,26 +10,26 @@ public class Account {
     public String phoneNumber;
 
     //required data
-    public Account(String emailAddress, String username, String password) {
+    public Users(String emailAddress, String username, String password) {
         this.emailAddress = emailAddress;
         this.username = username;
         this.password = password;
     }
 
-    public static Account getAccount(HashMap<String, Account> accounts, String emailAddress) {
-        Account account = null;
-        for (Account x : accounts.values()) {
+    public static Users getAccount(HashMap<String, Users> accounts, String emailAddress) {
+        Users users = null;
+        for (Users x : accounts.values()) {
             if (x.emailAddress.equals(emailAddress)) {
-                account = x;
+                users = x;
                 break;
             }
         }
-        return account;
+        return users;
     }
 
-    public static Boolean any(HashMap<String, Account> accounts, String username) {
+    public static Boolean any(HashMap<String, Users> accounts, String username) {
         boolean exist = false;
-        for (Account x :
+        for (Users x :
                 accounts.values()) {
             if (x.username.equals(username)) {
                 exist = true;

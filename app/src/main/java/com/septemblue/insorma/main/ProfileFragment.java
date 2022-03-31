@@ -29,9 +29,9 @@ import android.widget.Toast;
 
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentProfileBinding;
-import com.septemblue.insorma.local.Account;
+import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.LocalData;
+import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.sign.SignActivity;
 // please read note above package
 public class ProfileFragment extends Fragment {
@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         // get the account from cache
-        Account user = Database.accounts.getValue().get(LocalData.getLoggedUser().getValue());
+        Users user = Database.accounts.getValue().get(Cache.getLoggedUser().getValue());
 
         // give layout profile data
         binding.profileUsername.setText(user.username);
@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getContext(), viewModel.profileMessage.getValue(), Toast.LENGTH_SHORT).show();
             viewModel.accountDeleted.observe(getViewLifecycleOwner(), newValue -> {
                 if (newValue) {
-                    LocalData.setLoggedUser("");
+                    Cache.setLoggedUser("");
                     Intent toSignActivity = new Intent(this.getContext(), SignActivity.class);
                     toSignActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(toSignActivity);
@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
 
         // button for clear logged cache and redirect to sign activity
         binding.profileLogOut.setOnClickListener(it -> {
-            LocalData.setLoggedUser("");
+            Cache.setLoggedUser("");
             Intent toSignActivity = new Intent(this.getContext(), SignActivity.class);
             toSignActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(toSignActivity);

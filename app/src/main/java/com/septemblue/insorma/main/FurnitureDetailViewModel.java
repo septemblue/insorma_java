@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.Furniture;
-import com.septemblue.insorma.local.History;
-import com.septemblue.insorma.local.LocalData;
+import com.septemblue.insorma.local.Product;
+import com.septemblue.insorma.local.Transaction;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -21,14 +20,14 @@ public class FurnitureDetailViewModel extends ViewModel {
     LiveData<String> furnitureDetailMessage = _furnitureDetailMessage;
 
     // function to buy, only buy when validation is succeeded
-    public void buy(String mQuantity, Furniture checkedOutFurniture) {
+    public void buy(String mQuantity, Product checkedOutProduct) {
         int quantity = Integer.parseInt(mQuantity);
         boolean valid = validate(quantity);
 
         if (valid) {
             transId += 1;
             Objects.requireNonNull(Database.transactionHistory.getValue())
-                    .add(new History(transId, quantity, checkedOutFurniture, checkedOutFurniture.price * quantity, Calendar.getInstance().getTime()));
+                    .add(new Transaction(transId, quantity, checkedOutProduct, checkedOutProduct.price * quantity, Calendar.getInstance().getTime()));
         }
     }
 

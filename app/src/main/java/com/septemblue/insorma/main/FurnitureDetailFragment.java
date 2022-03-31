@@ -11,7 +11,6 @@ package com.septemblue.insorma.main;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,8 +27,7 @@ import android.widget.Toast;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentFurnitureDetailBinding;
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.Furniture;
-import com.septemblue.insorma.local.LocalData;
+import com.septemblue.insorma.local.Product;
 
 import java.util.Objects;
 // please read note above package
@@ -54,20 +52,20 @@ public class FurnitureDetailFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(FurnitureDetailViewModel.class);
 
         // get selected furniture from home fragment by safeargs
-        Furniture checkedOutFurniture = Furniture
+        Product checkedOutProduct = Product
                 .getFurniture(Database.furnitures.getValue(), FurnitureDetailFragmentArgs.fromBundle(requireArguments()).getFurnitureId());
-        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(checkedOutFurniture.title);
+        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(checkedOutProduct.title);
 
         // give layout the furniture data
-        binding.furnitureDetailImage.setImageResource(checkedOutFurniture.imageSource);
-        binding.furnitureDetailTitle.setText(checkedOutFurniture.title);
-        binding.furnitureDetailPrice.setText(String.format("Rp. %s", checkedOutFurniture.price));
-        binding.furnitureDetailRating.setText(String.format("Rating : %d", checkedOutFurniture.rating));
-        binding.furnitureDetailDescription.setText(checkedOutFurniture.description);
+        binding.furnitureDetailImage.setImageResource(checkedOutProduct.imageSource);
+        binding.furnitureDetailTitle.setText(checkedOutProduct.title);
+        binding.furnitureDetailPrice.setText(String.format("Rp. %s", checkedOutProduct.price));
+        binding.furnitureDetailRating.setText(String.format("Rating : %d", checkedOutProduct.rating));
+        binding.furnitureDetailDescription.setText(checkedOutProduct.description);
 
         // button to buy
         binding.furnitureDetailBuyButton.setOnClickListener(it -> {
-            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedOutFurniture);
+            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedOutProduct);
             viewModel.furnitureDetailMessage.observe(getViewLifecycleOwner(), newValue -> {
                 Toast.makeText(getContext(), newValue, Toast.LENGTH_SHORT).show();
             });

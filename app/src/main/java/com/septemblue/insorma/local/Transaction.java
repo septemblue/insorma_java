@@ -2,16 +2,16 @@ package com.septemblue.insorma.local;
 
 import java.util.Date;
 
-public class History {
+public class Transaction {
     public int transId;
     public int quantity;
-    public Furniture furniture;
+    public Product product;
     public int totalPrice;
     public Date transDate;
 
-    public History(int transId, int quantity, Furniture checkedOutFurniture, int totalPrice, Date transDate) {
+    public Transaction(int transId, int quantity, Product checkedOutProduct, int totalPrice, Date transDate) {
         this.transId = transId;
-        this.furniture = checkedOutFurniture;
+        this.product = checkedOutProduct;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
         this.transDate = transDate;

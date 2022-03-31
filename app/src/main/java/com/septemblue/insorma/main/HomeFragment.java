@@ -15,35 +15,20 @@ package com.septemblue.insorma.main;
 import androidx.activity.OnBackPressedCallback;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentHomeBinding;
 import com.septemblue.insorma.local.Database;
-import com.septemblue.insorma.local.Furniture;
-import com.septemblue.insorma.local.LocalData;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 // please read note above package
 public class HomeFragment extends Fragment {
 
