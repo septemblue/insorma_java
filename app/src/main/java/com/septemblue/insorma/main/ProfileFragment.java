@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
             });
             Toast.makeText(getContext(), viewModel.profileMessage.getValue(), Toast.LENGTH_SHORT).show();
             binding.profileEditUsername.setVisibility(View.INVISIBLE);
-            binding.profileUsername.setText(View.VISIBLE);
+            binding.profileUsername.setVisibility(View.VISIBLE);
             it.setVisibility(View.INVISIBLE);
             binding.profileEditButton.setVisibility(View.VISIBLE);
         });
