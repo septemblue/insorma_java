@@ -30,6 +30,7 @@ public class ProfileViewModel extends ViewModel {
     public void editUsername(EditText newUsername, HashMap<String, Account> accounts, Account user) {
         boolean valid = validate(newUsername.getText().toString(), accounts);
         if (valid) {
+            _usernameChanged.setValue(true);
             _editUsername(newUsername.getText().toString(), user);
         }
     }
