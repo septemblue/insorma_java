@@ -47,7 +47,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="24dp"
         android:hint="@string/password_hint"
-        android:inputType="textVisiblePassword"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_phone_number" />
 
