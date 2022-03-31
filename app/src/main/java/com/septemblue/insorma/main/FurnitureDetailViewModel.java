@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Product;
 import com.septemblue.insorma.local.Transaction;
+import com.septemblue.insorma.local.Users;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 public class FurnitureDetailViewModel extends ViewModel {
-    // has static id that will to show how many transactions already done
-    private static int transId = 0;
 
     // message live data
     private MutableLiveData<String> _furnitureDetailMessage = new MutableLiveData<>("");
@@ -25,9 +25,10 @@ public class FurnitureDetailViewModel extends ViewModel {
         boolean valid = validate(quantity);
 
         if (valid) {
-            transId += 1;
-            Objects.requireNonNull(Database.transactionHistory.getValue())
-                    .add(new Transaction(transId, quantity, checkedOutProduct, checkedOutProduct.price * quantity, Calendar.getInstance().getTime()));
+            Database.setTransId(Database.getTransId() + 1);
+            Users user = Users.getAccount(Database.accounts.getValue(), Cache.getLoggedUser().getValue());
+            Objects.requireNonNull(Database.getTransactionHistory().getValue())
+                    .add(new Transaction(Database.getTransId(), user, quantity, checkedOutProduct, checkedOutProduct.price * quantity, Calendar.getInstance().getTime()));
         }
     }
 

@@ -28,8 +28,10 @@ import android.widget.Toast;
 
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentTransactionHistoryBinding;
+import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Transaction;
+import com.septemblue.insorma.local.Users;
 
 import java.util.Objects;
 import java.util.Vector;
@@ -38,6 +40,7 @@ public class TransactionHistoryFragment extends Fragment {
 
     private TransactionHistoryViewModel viewModel;
     private FragmentTransactionHistoryBinding binding;
+    Users user = Users.getAccount(Database.accounts.getValue(), Cache.getLoggedUser().getValue());
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,14 +68,15 @@ public class TransactionHistoryFragment extends Fragment {
 
     private class TransHistoryAdapter extends BaseAdapter {
         Context context;
-
         public TransHistoryAdapter(Context context) {
             this.context = context;
         }
 
         @Override
         public int getCount() {
-            int total = Objects.requireNonNull(Database.transactionHistory.getValue()).size();
+            int total = Objects.requireNonNull(Database.findUserHistory
+                    (Database.getTransactionHistory().getValue(), user.username)
+                    .getValue()).size();
             if (total != 0) return total;
             else {
                 Toast.makeText(context, "There are no transaction data", Toast.LENGTH_SHORT).show();
@@ -99,7 +103,8 @@ public class TransactionHistoryFragment extends Fragment {
             TextView transDate = adapterView.findViewById(R.id.transaction_history_furniture_date);
             TextView transFurnitureQuantity = adapterView.findViewById(R.id.transaction_history_furniture_quantity);
 
-            Vector<Transaction> histories = Database.transactionHistory.getValue();
+            Vector<Transaction> histories = Database.findUserHistory
+                    (Database.getTransactionHistory().getValue(), user.username).getValue();
 
             transId.setText(String.format("%d", histories.get(position).transId));
             transFurnitureTitle.setText(histories.get(position).product.title);
