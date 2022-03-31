@@ -11,13 +11,13 @@
         android:layout_margin="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="157dp"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/furniture_image"
-                android:layout_width="68dp"
-                android:layout_height="58dp"
+                android:layout_width="67dp"
+                android:layout_height="53dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -28,20 +28,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="2dp"
                 android:textSize="9sp"
                 app:layout_constraintStart_toEndOf="@+id/furniture_image"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/furniture_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="9sp"
+                app:layout_constraintStart_toEndOf="@+id/furniture_image"
+                app:layout_constraintTop_toBottomOf="@+id/furniture_title" />
+
+            <TextView
+                android:id="@+id/furniture_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="9sp"
+                app:layout_constraintStart_toEndOf="@+id/furniture_image"
+                app:layout_constraintTop_toBottomOf="@+id/furniture_price" />
 
             <TextView
                 android:id="@+id/furniture_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:textSize="9sp"
                 app:layout_constraintStart_toEndOf="@+id/furniture_image"
-                app:layout_constraintTop_toBottomOf="@+id/furniture_title" />
+                app:layout_constraintTop_toBottomOf="@+id/furniture_rating" />
 
             <Button
                 android:id="@+id/furniture_detail"

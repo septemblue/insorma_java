@@ -58,7 +58,9 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
         public void bind(Furniture furniture) {
             binding.furnitureImage.setImageResource(furniture.imageSource);
             binding.furnitureTitle.setText(furniture.title);
-            binding.furniturePrice.setText(String.format("Rp: %s", furniture.price));
+            binding.furniturePrice.setText(String.format("Rp: %d", furniture.price));
+            binding.furnitureRating.setText(String.format("Rating : %d", furniture.rating));
+            binding.furnitureDescription.setText(furniture.description);
 //          Here should only contain view logic, but passing 2 paremeter for OnClicklistener by lambda still confused me
 //          so for now i just implement business logic here hahaha. i'll improve later
             binding.furnitureDetail.setOnClickListener(it -> {

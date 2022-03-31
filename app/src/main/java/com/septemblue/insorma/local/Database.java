@@ -13,9 +13,9 @@ public class Database {
     private static final Account admin = new Account("admin", "superuser", "admin");
     private static final ArrayList<Furniture> example = new ArrayList()
     {{
-        add(new Furniture("SM42", R.drawable.sepatu, "Sepatu merah", 42000));
-        add(new Furniture("CJ25", R.drawable.cleana_jeans, "Celana Jeans", 25000));
-        add(new Furniture("BJ30", R.drawable.baju, "Baju Polos", 30000));
+        add(new Furniture("SM42", R.drawable.sepatu, "Sepatu merah", 42000, 4, "sepatu lebron"));
+        add(new Furniture("CJ25", R.drawable.cleana_jeans, "Celana Jeans", 25000, 3, "celana lembut"));
+        add(new Furniture("BJ30", R.drawable.baju, "Baju Polos", 30000, 3, "baju rumah biasa"));
     }};
 
     public static MutableLiveData<HashMap<String, Account>> accounts = new MutableLiveData<>(new HashMap<String, Account>()

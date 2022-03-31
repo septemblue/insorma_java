@@ -62,6 +62,8 @@ public class FurnitureDetailFragment extends Fragment {
         binding.furnitureDetailImage.setImageResource(checkedOutFurniture.imageSource);
         binding.furnitureDetailTitle.setText(checkedOutFurniture.title);
         binding.furnitureDetailPrice.setText(String.format("Rp. %s", checkedOutFurniture.price));
+        binding.furnitureDetailRating.setText(String.format("Rating : %d", checkedOutFurniture.rating));
+        binding.furnitureDetailDescription.setText(checkedOutFurniture.description);
 
         // button to buy
         binding.furnitureDetailBuyButton.setOnClickListener(it -> {

@@ -5,14 +5,18 @@ import java.util.ArrayList;
 public class Furniture {
     public String id;
     public int imageSource;
+    public int rating;
+    public String description;
     public String title;
     public int price;
 
-    public Furniture(String id, int imageSource, String title, int price) {
+    public Furniture(String id, int imageSource, String title, int price, int rating, String description) {
         this.id = id;
         this.imageSource = imageSource;
         this.title = title;
         this.price = price;
+        this.rating = rating;
+        this.description = description;
     }
 
     public static Furniture getFurniture(ArrayList<Furniture> furnitures, String id) {
