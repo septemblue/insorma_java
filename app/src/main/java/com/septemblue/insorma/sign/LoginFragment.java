@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        viewModel.startDatabase(this.getContext());
+
         // Handle the back press hardware button, so the user can't go back to main page
         // after signing out
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {

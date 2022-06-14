@@ -1,6 +1,11 @@
 package com.septemblue.insorma.sign;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Cache;
+import com.septemblue.insorma.storage.DatabaseHelper;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -48,5 +54,12 @@ public class LoginViewModel extends ViewModel {
         _loginMessage.setValue("Welcome " + Objects.requireNonNull(accounts.get(emailAddress)).username);
         _logged.setValue(true);
         return true;
+    }
+
+    // Database
+    public void startDatabase(Context context) {
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+        boolean success = databaseHelper.admin();
+        Toast.makeText(context, "Success = " + success, Toast.LENGTH_SHORT).show();
     }
 }
