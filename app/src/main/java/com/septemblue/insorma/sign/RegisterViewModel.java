@@ -1,5 +1,9 @@
 package com.septemblue.insorma.sign;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.EditText;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +12,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.local.Database;
+import com.septemblue.insorma.storage.DatabaseHelper;
+import com.septemblue.insorma.storage.UserModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterViewModel extends ViewModel {
 
@@ -19,22 +28,20 @@ public class RegisterViewModel extends ViewModel {
             EditText emailAddress,
             EditText username,
             EditText phoneNumber,
-            EditText password
-    ) {
+            EditText password,
+            DatabaseHelper databaseHelper) {
         if (privateIsBlank(emailAddress, username, phoneNumber, password)) {
             _registerMessage.setValue("All fields must be filled");
             return;
         }
         boolean valid = validate(emailAddress.getText().toString(), username.getText().toString(), password.getText().toString());
         if (valid) {
-            _register(emailAddress.getText().toString(), username.getText().toString(), password.getText().toString());
+            _register(emailAddress.getText().toString(), username.getText().toString(), password.getText().toString(), phoneNumber.getText().toString() ,databaseHelper);
         }
     }
 
-    private void _register(String emailAddress, String username, String password) {
-        Users newUsers = new Users(emailAddress, username, password);
-        newUsers.password = password;
-        Database.accounts.getValue().put(emailAddress, newUsers);
+    private void _register(String emailAddress, String username, String password, String phone, DatabaseHelper databaseHelper) {
+        databaseHelper.register(emailAddress, username, password, phone);
         _registerMessage.setValue("Register succeed");
     }
 
@@ -42,8 +49,13 @@ public class RegisterViewModel extends ViewModel {
     private boolean validate(
             String emailAddress,
             String username,
-            String password
-    ) {
+            String password) {
+
+        List<UserModel> returnList = new ArrayList<>();
+
+        // get data from database
+        String getAllAccountsQuery = "SELECT * FROM SIGN_TABLE";
+
         if (!emailAddress.endsWith(".com")) {
             _registerMessage.setValue("email address must end with .com");
             return false;
@@ -60,6 +72,7 @@ public class RegisterViewModel extends ViewModel {
             _registerMessage.setValue("username already exist");
             return false;
         }
+
         return true;
     }
 

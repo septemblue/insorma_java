@@ -46,8 +46,6 @@ public class LoginFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseHelper = new DatabaseHelper(this.getContext());
-        boolean success = databaseHelper.admin();
-        Toast.makeText(this.getContext(), "Success = " + success, Toast.LENGTH_SHORT).show();
 
         // Handle the back press hardware button, so the user can't go back to main page
         // after signing out

@@ -46,19 +46,6 @@ public class LoginViewModel extends ViewModel {
     // required validations
     // 1. if the account exist
     // 2. if the password same as the account
-//    private boolean validate(String emailAddress, String password) {
-//        HashMap<String, Users> accounts = Database.accounts.getValue();
-//        if (!Objects.requireNonNull(accounts).containsKey(emailAddress)) {
-//            _loginMessage.setValue("email not found");
-//            return false;
-//        } else if (!Objects.requireNonNull(accounts.get(emailAddress)).password.equals(password)) {
-//            _loginMessage.setValue("wrong password");
-//            return false;
-//        }
-//        _loginMessage.setValue("Welcome " + Objects.requireNonNull(accounts.get(emailAddress)).username);
-//        _logged.setValue(true);
-//        return true;
-//    }
     private boolean validate(String emailAddress, String password, DatabaseHelper databaseHelper) {
 
         List<UserModel> returnList = new ArrayList<>();
@@ -71,15 +58,16 @@ public class LoginViewModel extends ViewModel {
 
         if (cursor.moveToFirst()) {
             do {
-                String email = cursor.getString(0);
-                String username = cursor.getString(1);
-                String dbpassword = cursor.getString(2);
-                String phone = cursor.getString(3);
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("EMAIL_ADDRESS"));
+                String username = cursor.getString(cursor.getColumnIndexOrThrow("USERNAME"));
+                String dbpassword = cursor.getString(cursor.getColumnIndexOrThrow("PASSWORD"));
+                String phone = cursor.getString(cursor.getColumnIndexOrThrow("PHONE_NUMBER"));
 
                 UserModel userModel = new UserModel(email, username, dbpassword, phone);
                 returnList.add(userModel);
                 Log.i("model", userModel.toString());
-            }while(cursor.isAfterLast());
+                cursor.moveToNext();
+            }while(!cursor.isAfterLast());
         }
 
         cursor.close();

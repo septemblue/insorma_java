@@ -45,4 +45,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long insert = db.insert("SIGN_TABLE", null, contentValues);
         return insert != -1;
     }
+
+    public boolean register(String email, String username, String password, String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_EMAIL_ADDRESS, email);
+        contentValues.put(COLUMN_USERNAME, username);
+        contentValues.put(COLUMN_PASSWORD, password);
+        contentValues.put(COLUMN_PHONE_NUMBER, phone);
+
+        long insert = db.insert("SIGN_TABLE", null, contentValues);
+        return insert != -1;
+    }
 }
