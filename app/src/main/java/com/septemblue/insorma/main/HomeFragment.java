@@ -21,13 +21,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.septemblue.insorma.databinding.FragmentHomeBinding;
 import com.septemblue.insorma.local.Database;
+import com.septemblue.insorma.main.api.FurnituresAPI;
+import com.septemblue.insorma.main.dataclass.Furniture;
+import com.septemblue.insorma.main.dataclass.Furnitures;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 // please read note above package
 public class HomeFragment extends Fragment {
@@ -54,18 +69,53 @@ public class HomeFragment extends Fragment {
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        // create the adapter for home recycler view
-        // give adapter the list if not empty or give empty warning
-        FurnitureItemAdapter adapter = new FurnitureItemAdapter();
-        if (Database.furnitures.getValue().size() != 0) {
-            adapter.submitList(Database.furnitures.getValue());
-        } else {
-            binding.noFurniture.setText("There are no furniture");
-            Snackbar.make(view, "There are no furniture", Snackbar.LENGTH_SHORT).show();
-        }
 
-        // set the adapter
-        binding.furnitureList.setAdapter(adapter);
+        // Retrofit
+        // base url : https://mocki.io
+        // api endpoint : /v1/5f379081-2473-4494-9cc3-9e808772dc54
+
+        // get furnitures
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit =  new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl("https://mocki.io")
+                .build();
+
+        FurnituresAPI service = retrofit.create(FurnituresAPI.class);
+
+        Call<Furnitures> response = service.listFurnitures();
+        response.enqueue(new Callback<Furnitures>() {
+            @Override
+            public void onResponse(Call<Furnitures> call, Response<Furnitures> response) {
+                List<Furniture> furnitures = response.body().getFurnitures();
+                // create the adapter for home recycler view
+                // give adapter the list if not empty or give empty warning
+                FurnitureItemAdapter adapter = new FurnitureItemAdapter();
+                if (furnitures.size() != 0) {
+                    Log.i("furniture", furnitures.toString());
+                    adapter.submitList(furnitures);
+                } else {
+                    binding.noFurniture.setText("There are no furniture");
+                    Snackbar.make(view, "There are no furniture", Snackbar.LENGTH_SHORT).show();
+                }
+
+                // set the adapter
+                binding.furnitureList.setAdapter(adapter);
+                Log.i("respon", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Furnitures> call, Throwable t) {
+                Log.i("gudang", t.getMessage());
+            }
+        });
+
+
+
         return view;
     }
 

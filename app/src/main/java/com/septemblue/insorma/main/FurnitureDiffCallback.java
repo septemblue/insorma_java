@@ -6,17 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.septemblue.insorma.local.Product;
+import com.septemblue.insorma.main.dataclass.Furniture;
 
 // DiffUtilCallback from Recycler view to track layout changes
-public class FurnitureDiffCallback extends DiffUtil.ItemCallback<Product> {
+public class FurnitureDiffCallback extends DiffUtil.ItemCallback<Furniture> {
     @Override
-    public boolean areItemsTheSame(@NonNull Product oldItem, @NonNull Product newItem) {
+    public boolean areItemsTheSame(@NonNull Furniture oldItem, @NonNull Furniture newItem) {
         return oldItem == newItem;
     }
 
     @SuppressLint("DiffUtilEquals")
     @Override
-    public boolean areContentsTheSame(@NonNull Product oldItem, @NonNull Product newItem) {
+    public boolean areContentsTheSame(@NonNull Furniture oldItem, @NonNull Furniture newItem) {
         return oldItem == newItem;
     }
 }
