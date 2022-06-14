@@ -39,14 +39,6 @@ public class LoginViewModel extends ViewModel {
             _loginMessage.setValue("All fields must be filled");
             return;
         }
-        boolean valid = validate(emailAddress.getText().toString(), password.getText().toString(), databaseHelper);
-        if (valid) { Cache.setLoggedUser(emailAddress.getText().toString()); }
-    }
-
-    // required validations
-    // 1. if the account exist
-    // 2. if the password same as the account
-    private boolean validate(String emailAddress, String password, DatabaseHelper databaseHelper) {
 
         List<UserModel> returnList = new ArrayList<>();
 
@@ -72,6 +64,16 @@ public class LoginViewModel extends ViewModel {
 
         cursor.close();
         db.close();
+
+        // validate
+        boolean valid = validate(emailAddress.getText().toString(), password.getText().toString(), databaseHelper, returnList);
+        if (valid) { Cache.setLoggedUser(emailAddress.getText().toString(), databaseHelper); }
+    }
+
+    // required validations
+    // 1. if the account exist
+    // 2. if the password same as the account
+    private boolean validate(String emailAddress, String password, DatabaseHelper databaseHelper, List<UserModel> returnList) {
 
         boolean login = false;
         boolean emailPassword = false;
