@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.storage.DatabaseHelper;
+import com.septemblue.insorma.storage.UserHelper;
 import com.septemblue.insorma.storage.UserModel;
 
 import java.util.ArrayList;
@@ -29,19 +30,19 @@ public class RegisterViewModel extends ViewModel {
             EditText username,
             EditText phoneNumber,
             EditText password,
-            DatabaseHelper databaseHelper) {
+            UserHelper userHelper) {
         if (privateIsBlank(emailAddress, username, phoneNumber, password)) {
             _registerMessage.setValue("All fields must be filled");
             return;
         }
         boolean valid = validate(emailAddress.getText().toString(), username.getText().toString(), password.getText().toString());
         if (valid) {
-            _register(emailAddress.getText().toString(), username.getText().toString(), password.getText().toString(), phoneNumber.getText().toString() ,databaseHelper);
+            _register(emailAddress.getText().toString(), username.getText().toString(), password.getText().toString(), phoneNumber.getText().toString() ,userHelper);
         }
     }
 
-    private void _register(String emailAddress, String username, String password, String phone, DatabaseHelper databaseHelper) {
-        databaseHelper.register(emailAddress, username, password, phone);
+    private void _register(String emailAddress, String username, String password, String phone, UserHelper userHelper) {
+        userHelper.register(emailAddress, username, password, phone);
         _registerMessage.setValue("Register succeed");
     }
 

@@ -32,18 +32,19 @@ import android.widget.Toast;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentRegisterBinding;
 import com.septemblue.insorma.storage.DatabaseHelper;
+import com.septemblue.insorma.storage.UserHelper;
 
 // please read note above package
 public class RegisterFragment extends Fragment {
 
     private RegisterViewModel viewModel;
     private FragmentRegisterBinding binding;
-    private DatabaseHelper databaseHelper;
+    private UserHelper userHelper;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseHelper = new DatabaseHelper(this.getContext());
+        userHelper = new UserHelper(this.getContext());
     }
 
     @Override
@@ -60,7 +61,7 @@ public class RegisterFragment extends Fragment {
                     binding.registerUsername,
                     binding.registerPhoneNumber,
                     binding.registerPassword,
-                    databaseHelper
+                    userHelper
             );
             viewModel.registerMessage.observe(getViewLifecycleOwner(), newValue -> {
                 Toast.makeText(getActivity(), viewModel.registerMessage.getValue(), Toast.LENGTH_SHORT).show();

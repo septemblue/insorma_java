@@ -9,6 +9,7 @@ import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Product;
 import com.septemblue.insorma.local.Transaction;
 import com.septemblue.insorma.local.Users;
+import com.septemblue.insorma.storage.UserModel;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class FurnitureDetailViewModel extends ViewModel {
 
         if (valid) {
             Database.setTransId(Database.getTransId() + 1);
-            Users user = Users.getAccount(Database.accounts.getValue(), Cache.getLoggedUser().getValue());
+            UserModel user = Cache.getLoggedUser().getValue();
             Objects.requireNonNull(Database.getTransactionHistory().getValue())
                     .add(new Transaction(Database.getTransId(), user, quantity, checkedOutProduct, checkedOutProduct.price * quantity, Calendar.getInstance().getTime()));
         }

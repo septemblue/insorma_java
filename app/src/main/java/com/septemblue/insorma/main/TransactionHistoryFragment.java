@@ -32,6 +32,7 @@ import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Transaction;
 import com.septemblue.insorma.local.Users;
+import com.septemblue.insorma.storage.UserModel;
 
 import java.util.Objects;
 import java.util.Vector;
@@ -40,7 +41,7 @@ public class TransactionHistoryFragment extends Fragment {
 
     private TransactionHistoryViewModel viewModel;
     private FragmentTransactionHistoryBinding binding;
-    Users user = Users.getAccount(Database.accounts.getValue(), Cache.getLoggedUser().getValue());
+    UserModel user = Cache.getLoggedUser().getValue();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,16 +1,18 @@
 package com.septemblue.insorma.local;
 
+import com.septemblue.insorma.storage.UserModel;
+
 import java.util.Date;
 
 public class Transaction {
     public int transId;
     public int quantity;
     public Product product;
-    public Users user;
+    public UserModel user;
     public int totalPrice;
     public Date transDate;
 
-    public Transaction(int transId, Users user, int quantity, Product checkedOutProduct, int totalPrice, Date transDate) {
+    public Transaction(int transId, UserModel user, int quantity, Product checkedOutProduct, int totalPrice, Date transDate) {
         this.transId = transId;
         this.user = user;
         this.product = checkedOutProduct;

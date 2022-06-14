@@ -34,18 +34,19 @@ import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.sign.SignActivity;
 import com.septemblue.insorma.storage.DatabaseHelper;
+import com.septemblue.insorma.storage.UserHelper;
 
 // please read note above package
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel viewModel;
     private FragmentProfileBinding binding;
-    private DatabaseHelper databaseHelper;
+    private UserHelper userHelper;
     // has option menu
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseHelper = new DatabaseHelper(this.getContext());
+        userHelper = new UserHelper(this.getContext());
         setHasOptionsMenu(true);
     }
 
@@ -94,7 +95,7 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getContext(), viewModel.profileMessage.getValue(), Toast.LENGTH_SHORT).show();
             viewModel.accountDeleted.observe(getViewLifecycleOwner(), newValue -> {
                 if (newValue) {
-                    Cache.setLoggedUser("", databaseHelper);
+                    Cache.setLoggedUser("", userHelper.users);
                     Intent toSignActivity = new Intent(this.getContext(), SignActivity.class);
                     toSignActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(toSignActivity);
@@ -104,7 +105,7 @@ public class ProfileFragment extends Fragment {
 
         // button for clear logged cache and redirect to sign activity
         binding.profileLogOut.setOnClickListener(it -> {
-            Cache.setLoggedUser("", databaseHelper);
+            Cache.setLoggedUser("", userHelper.users);
             Intent toSignActivity = new Intent(this.getContext(), SignActivity.class);
             toSignActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(toSignActivity);

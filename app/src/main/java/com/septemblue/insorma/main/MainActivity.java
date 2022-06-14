@@ -55,7 +55,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private final String user = Cache.getLoggedUser().getValue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_toolbar, menu);
         MenuItem item = menu.findItem(R.id.toolbar_username);
-        item.setTitle(Objects.requireNonNull(Database.accounts.getValue().get(user)).username);
+        item.setTitle(Objects.requireNonNull(Cache.getLoggedUser().getValue()).username);
         return super.onCreateOptionsMenu(menu);
     }
 

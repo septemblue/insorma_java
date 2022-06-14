@@ -33,54 +33,29 @@ public class LoginViewModel extends ViewModel {
     LiveData<String> loginMessage = _loginMessage;
 
     // validate the edit texts and validate the data
-    public void login(EditText emailAddress, EditText password, DatabaseHelper databaseHelper) {
+    public void login(EditText emailAddress, EditText password, List<UserModel> users) {
         // implement isBlank idk why i cant access the function
         if (emailAddress.getText().toString().trim().isEmpty()) {
             _loginMessage.setValue("All fields must be filled");
             return;
         }
 
-        List<UserModel> returnList = new ArrayList<>();
-
-        // get data from database
-        String getAllAccountsQuery = "SELECT * FROM SIGN_TABLE";
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(getAllAccountsQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String email = cursor.getString(cursor.getColumnIndexOrThrow("EMAIL_ADDRESS"));
-                String username = cursor.getString(cursor.getColumnIndexOrThrow("USERNAME"));
-                String dbpassword = cursor.getString(cursor.getColumnIndexOrThrow("PASSWORD"));
-                String phone = cursor.getString(cursor.getColumnIndexOrThrow("PHONE_NUMBER"));
-
-                UserModel userModel = new UserModel(email, username, dbpassword, phone);
-                returnList.add(userModel);
-                Log.i("model", userModel.toString());
-                cursor.moveToNext();
-            }while(!cursor.isAfterLast());
-        }
-
-        cursor.close();
-        db.close();
-
         // validate
-        boolean valid = validate(emailAddress.getText().toString(), password.getText().toString(), databaseHelper, returnList);
-        if (valid) { Cache.setLoggedUser(emailAddress.getText().toString(), databaseHelper); }
+        boolean valid = validate(emailAddress.getText().toString(), password.getText().toString(),  users);
+        if (valid) { Cache.setLoggedUser(emailAddress.getText().toString(), users); }
     }
 
     // required validations
     // 1. if the account exist
     // 2. if the password same as the account
-    private boolean validate(String emailAddress, String password, DatabaseHelper databaseHelper, List<UserModel> returnList) {
+    private boolean validate(String emailAddress, String password, List<UserModel> users) {
 
         boolean login = false;
         boolean emailPassword = false;
         UserModel loggedUser = null;
 
         for (UserModel x:
-             returnList) {
+             users) {
             if (x.emailAddress.equals(emailAddress)) {
                 login = true;
                 if (x.password.equals(password)) {

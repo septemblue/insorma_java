@@ -17,39 +17,27 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cache {
-    private static MutableLiveData<String> _loggedUser = new MutableLiveData<>("");
-    static LiveData<String> loggedUser;
+    private static MutableLiveData<UserModel> _loggedUser = new MutableLiveData<>();
+    static LiveData<UserModel> loggedUser;
 
     // return immutable live data ;
-    public static LiveData<String> getLoggedUser() { return _loggedUser; }
+    public static LiveData<UserModel> getLoggedUser() { return _loggedUser; }
 
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
-    public static void setLoggedUser(String userEmail, DatabaseHelper databaseHelper) {
+    public static void setLoggedUser(String userEmail, List<UserModel> users) {
 
-        // get data from database
-        String getAllAccountsQuery = "SELECT * FROM SIGN_TABLE";
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(getAllAccountsQuery, null);
-        boolean validemail = false;
-
-        if (cursor.moveToFirst()) {
-            do {
-                String email = cursor.getString(cursor.getColumnIndexOrThrow("EMAIL_ADDRESS"));
-                String username = cursor.getString(cursor.getColumnIndexOrThrow("USERNAME"));
-                String dbpassword = cursor.getString(cursor.getColumnIndexOrThrow("PASSWORD"));
-                String phone = cursor.getString(cursor.getColumnIndexOrThrow("PHONE_NUMBER"));
-
-                if (userEmail.equals(email)) validemail = true;
-                cursor.moveToNext();
-            }while(!cursor.isAfterLast());
+        UserModel loggedUser = null;
+        boolean validEmail = false;
+        for (UserModel user :
+                users) {
+            if (user.emailAddress.equals(userEmail)) {
+                validEmail = true;
+                loggedUser = user;
+            }
         }
 
-        cursor.close();
-        db.close();
-
-        if (validemail || userEmail.equals("")) {
-            _loggedUser.setValue(userEmail);
+        if (validEmail || userEmail.equals("")) {
+            _loggedUser.setValue(loggedUser);
         } else {
             throw new RuntimeException("user does not exist");
         }
