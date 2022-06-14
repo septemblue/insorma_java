@@ -33,18 +33,21 @@ import android.widget.Toast;
 import com.septemblue.insorma.main.MainActivity;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentLoginBinding;
+import com.septemblue.insorma.storage.DatabaseHelper;
 
 // please read note above package
 public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
+    private DatabaseHelper databaseHelper;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        viewModel.startDatabase(this.getContext());
+        databaseHelper = new DatabaseHelper(this.getContext());
+        boolean success = databaseHelper.admin();
+        Toast.makeText(this.getContext(), "Success = " + success, Toast.LENGTH_SHORT).show();
 
         // Handle the back press hardware button, so the user can't go back to main page
         // after signing out
@@ -67,7 +70,7 @@ public class LoginFragment extends Fragment {
 
         //login
         binding.loginButton.setOnClickListener(it -> {
-            viewModel.login(binding.loginEmailAddress, binding.loginPassword);
+            viewModel.login(binding.loginEmailAddress, binding.loginPassword, databaseHelper);
             // Give login notification
             viewModel.logged.observe(getViewLifecycleOwner(), newValue -> Toast.makeText(getActivity(), viewModel.loginMessage.getValue(), Toast.LENGTH_SHORT).show());
         });
