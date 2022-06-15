@@ -60,9 +60,9 @@ public class FurnitureDetailViewModel extends ViewModel {
     private void sendSMS(Furniture furniture, boolean valid) {
         // PIXEL 3 API 23 PORT 5554
         if (valid) {
-            smsManager.sendTextMessage("5554", null, "has been successful to buy" + furniture.getProduct_name(), null, null);
+            smsManager.sendTextMessage("5554", null, "has been successfully buying " + furniture.getProduct_name(), null, null);
         } else {
-            smsManager.sendTextMessage("5554", null, "Error to buy" + furniture.getProduct_name(), null, null);
+            smsManager.sendTextMessage("5554", null, "Error to buy " + furniture.getProduct_name(), null, null);
 
         }
     }

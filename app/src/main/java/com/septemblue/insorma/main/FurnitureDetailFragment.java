@@ -46,6 +46,7 @@ public class FurnitureDetailFragment extends Fragment {
     private FragmentFurnitureDetailBinding binding;
     ActivityResultLauncher<String> requestPermissionLauncher;
 
+
     // has option menu
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
