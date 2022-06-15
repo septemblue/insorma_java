@@ -9,14 +9,20 @@
  */
 package com.septemblue.insorma.main;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,12 +44,21 @@ public class FurnitureDetailFragment extends Fragment {
 
     private FurnitureDetailViewModel viewModel;
     private FragmentFurnitureDetailBinding binding;
+    ActivityResultLauncher<String> requestPermissionLauncher;
 
     // has option menu
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+
+                    } else {
+
+                    }
+                });
+        requestPermissionLauncher.launch(Manifest.permission.SEND_SMS);
     }
 
     @Override
