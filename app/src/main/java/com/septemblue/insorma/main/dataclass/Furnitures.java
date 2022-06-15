@@ -1,16 +1,18 @@
 package com.septemblue.insorma.main.dataclass;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Furnitures {
-    List<Furniture> furnitures;
+    ArrayList<Furniture> furnitures;
 
-    public List<Furniture> getFurnitures() {
+    public ArrayList<Furniture> getFurnitures() {
         return furnitures;
     }
 
 
     // to string
+
 
     @Override
     public String toString() {
@@ -20,9 +22,8 @@ public class Furnitures {
     }
 
     // setter and getter
-    public void setFurnitures(List<Furniture> furnitures) {
+
+    public void setFurnitures(ArrayList<Furniture> furnitures) {
         this.furnitures = furnitures;
     }
-
-
 }

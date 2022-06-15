@@ -20,8 +20,8 @@
         android:label="Furniture Detail"
         tools:layout="@layout/fragment_furniture_detail" >
         <argument
-            android:name="furnitureId"
-            app:argType="string" />
+            android:name="furnitureIndex"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/transactionHistoryFragment"

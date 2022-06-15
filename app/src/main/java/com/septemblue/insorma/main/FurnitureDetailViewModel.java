@@ -9,6 +9,7 @@ import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Product;
 import com.septemblue.insorma.local.Transaction;
 import com.septemblue.insorma.local.Users;
+import com.septemblue.insorma.main.dataclass.Furniture;
 import com.septemblue.insorma.storage.UserModel;
 
 import java.util.Calendar;
@@ -21,7 +22,7 @@ public class FurnitureDetailViewModel extends ViewModel {
     LiveData<String> furnitureDetailMessage = _furnitureDetailMessage;
 
     // function to buy, only buy when validation is succeeded
-    public void buy(String mQuantity, Product checkedOutProduct) {
+    public void buy(String mQuantity, Furniture furniture) {
         int quantity = Integer.parseInt(mQuantity);
         boolean valid = validate(quantity);
 
@@ -29,7 +30,8 @@ public class FurnitureDetailViewModel extends ViewModel {
             Database.setTransId(Database.getTransId() + 1);
             UserModel user = Cache.getLoggedUser().getValue();
             Objects.requireNonNull(Database.getTransactionHistory().getValue())
-                    .add(new Transaction(Database.getTransId(), user, quantity, checkedOutProduct, checkedOutProduct.price * quantity, Calendar.getInstance().getTime()));
+                    .add(new Transaction(Database.getTransId(), user, quantity, furniture,
+                            Integer.parseInt(furniture.getPrice()) * quantity, Calendar.getInstance().getTime()));
         }
     }
 

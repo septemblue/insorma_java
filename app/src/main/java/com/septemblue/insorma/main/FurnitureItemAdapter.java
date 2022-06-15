@@ -32,7 +32,7 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
     public void onBindViewHolder(@NonNull FurnitureItemViewHolder holder, int position) {
         // bind the view
         Furniture furniture = getItem(position);
-        holder.bind(furniture, holder.itemView.getContext());
+        holder.bind(furniture, holder.itemView.getContext(), position);
     }
 
     // this class used only to control all the view logic
@@ -51,7 +51,7 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
         }
         // binding, here i use non view logic here and should be improved later
         // but in kotlin project i already work all of the improvements in this project
-        public void bind(Furniture furniture, Context context) {
+        public void bind(Furniture furniture, Context context, int position) {
             Glide.with(context).load(furniture.getImage()).into(binding.furnitureImage);
             binding.furnitureTitle.setText(furniture.getProduct_name());
             binding.furniturePrice.setText(furniture.getPrice());
@@ -62,9 +62,8 @@ public class FurnitureItemAdapter extends ListAdapter<Furniture, FurnitureItemAd
 //          so for now i just implement business logic here hahaha. i'll improve later
 
             binding.furnitureDetail.setOnClickListener(it -> {
-                HomeFragmentDirections.FurnitureMoreDetail action = HomeFragmentDirections.furnitureMoreDetail(furniture.id);
+                HomeFragmentDirections.FurnitureMoreDetail action = HomeFragmentDirections.furnitureMoreDetail(position);
                 Navigation.findNavController(itemView).navigate(action);
-                Toast.makeText(this.itemView.getContext(), "you clicked " + furniture.id, Toast.LENGTH_SHORT).show();
             });
         }
     }

@@ -24,10 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.septemblue.insorma.R;
 import com.septemblue.insorma.databinding.FragmentFurnitureDetailBinding;
+import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Product;
+import com.septemblue.insorma.main.dataclass.Furniture;
 
 import java.util.Objects;
 // please read note above package
@@ -52,20 +55,21 @@ public class FurnitureDetailFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(FurnitureDetailViewModel.class);
 
         // get selected furniture from home fragment by safeargs
-        Product checkedOutProduct = Product
-                .getFurniture(Database.furnitures.getValue(), FurnitureDetailFragmentArgs.fromBundle(requireArguments()).getFurnitureId());
-        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(checkedOutProduct.title);
+        int checkedIndex = FurnitureDetailFragmentArgs.fromBundle(requireArguments()).getFurnitureIndex();
+        Furniture checkedFurniture = Cache.furnitures.get(checkedIndex);
+        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(checkedFurniture.getProduct_name());
 
         // give layout the furniture data
-        binding.furnitureDetailImage.setImageResource(checkedOutProduct.imageSource);
-        binding.furnitureDetailTitle.setText(checkedOutProduct.title);
-        binding.furnitureDetailPrice.setText(String.format("Rp. %s", checkedOutProduct.price));
-        binding.furnitureDetailRating.setText(String.format("Rating : %d", checkedOutProduct.rating));
-        binding.furnitureDetailDescription.setText(checkedOutProduct.description);
+//        binding.furnitureDetailImage.setImageResource(furniture.imageSource);
+        Glide.with(this.requireContext()).load(checkedFurniture.getImage()).into(binding.furnitureDetailImage);
+        binding.furnitureDetailTitle.setText(checkedFurniture.getProduct_name());
+        binding.furnitureDetailPrice.setText(String.format("Rp. %s", checkedFurniture.getPrice()));
+        binding.furnitureDetailRating.setText(String.format("Rating : %s", checkedFurniture.getRating()));
+        binding.furnitureDetailDescription.setText(checkedFurniture.getDescription());
 
         // button to buy
         binding.furnitureDetailBuyButton.setOnClickListener(it -> {
-            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedOutProduct);
+            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedFurniture);
             viewModel.furnitureDetailMessage.observe(getViewLifecycleOwner(), newValue -> {
                 Toast.makeText(getContext(), newValue, Toast.LENGTH_SHORT).show();
             });

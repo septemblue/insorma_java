@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.septemblue.insorma.main.dataclass.Furniture;
 import com.septemblue.insorma.storage.DatabaseHelper;
 import com.septemblue.insorma.storage.UserModel;
 
@@ -42,4 +43,5 @@ public class Cache {
             throw new RuntimeException("user does not exist");
         }
     }
+    public static ArrayList<Furniture> furnitures = new ArrayList<>();
 }
