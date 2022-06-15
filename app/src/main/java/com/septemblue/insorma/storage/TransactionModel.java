@@ -4,8 +4,9 @@ import java.util.Date;
 
 
 public class TransactionModel {
-    int TransactionID;
-
-    Date TransactionDate;
-    int Quantity;
+    public int TransactionID;
+    public int UserID;
+    public int ProductID;
+    public Date TransactionDate;
+    public int Quantity;
 }

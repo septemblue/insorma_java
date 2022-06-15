@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 public class UserModel {
 
+    public int UserID;
     public String emailAddress;
     public String username;
     public String password;
