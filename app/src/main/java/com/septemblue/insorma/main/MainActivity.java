@@ -40,6 +40,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (it.getItemId() == R.id.transactionHistoryFragment) {
                 Navigation.findNavController(this, R.id.main_nav_host_fragment).navigate(R.id.transactionHistoryFragment);
+                return true;
+            } else if (it.getItemId() == R.id.map) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
                 return true;
             }else return false;
         });
