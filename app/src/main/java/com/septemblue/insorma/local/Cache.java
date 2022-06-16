@@ -19,10 +19,10 @@ import java.util.Objects;
 
 public class Cache {
     private static MutableLiveData<UserModel> _loggedUser = new MutableLiveData<>();
-    static LiveData<UserModel> loggedUser;
+    static LiveData<UserModel> loggedUser = _loggedUser;
 
     // return immutable live data ;
-    public static LiveData<UserModel> getLoggedUser() { return _loggedUser; }
+    public static LiveData<UserModel> getLoggedUser() { return loggedUser; }
 
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
     public static void setLoggedUser(String userEmail, List<UserModel> users) {

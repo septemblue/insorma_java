@@ -22,9 +22,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        String createTable = "CREATE TABLE SIGN_TABLE (" + COLUMN_EMAIL_ADDRESS + " TEXT, " + COLUMN_USERNAME + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_PHONE_NUMBER + " TEXT)";
-        sqLiteDatabase.execSQL(createTable);
+        String userTable = "CREATE TABLE USER_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EMAIL_ADDRESS + " TEXT, " + COLUMN_USERNAME + " TEXT, " + COLUMN_PASSWORD + " TEXT, " + COLUMN_PHONE_NUMBER + " TEXT)";
+        sqLiteDatabase.execSQL(userTable);
 
+        String productTable = "CREATE TABLE PRODUCT_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT, productPrice TEXT, productImage TEXT, productDescription TEXT)";
+        sqLiteDatabase.execSQL(productTable);
+
+        String transactionTable = "CREATE TABLE TRANSACTION_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, userID INT, productID INT,transactionDate TEXT, quantity INT, FOREIGN KEY(userID) REFERENCES USER_TABLE(ID), FOREIGN KEY(productID) REFERENCES PRODUCT_TABLE(ID))";
+        sqLiteDatabase.execSQL(transactionTable);
     }
 
     @Override

@@ -35,6 +35,7 @@ import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.main.api.FurnituresAPI;
 import com.septemblue.insorma.main.dataclass.Furniture;
 import com.septemblue.insorma.main.dataclass.Furnitures;
+import com.septemblue.insorma.storage.ProductHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,9 +50,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 // please read note above package
 public class HomeFragment extends Fragment {
 
+    ProductHelper productHelper;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        productHelper = new ProductHelper(this.getContext());
         /* handle the back press hardware button
         to prevent back to login without sign out or delete account */
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment {
             response.enqueue(new Callback<Furnitures>() {
                 @Override
                 public void onResponse(Call<Furnitures> call, Response<Furnitures> response) {
-                    viewModel.setFurnitures(response.body().getFurnitures());
+                    viewModel.setFurnitures(response.body().getFurnitures(), productHelper);
                     if(!viewModel.makeAdapter()) {
                         binding.noFurniture.setText("There are no furniture");
                         Snackbar.make(view, "There are no furniture", Snackbar.LENGTH_SHORT).show();

@@ -8,13 +8,23 @@ import androidx.lifecycle.ViewModel;
 
 import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.main.dataclass.Furniture;
+import com.septemblue.insorma.storage.ProductHelper;
+import com.septemblue.insorma.storage.ProductModel;
 
 import java.util.ArrayList;
 
 public class HomeViewModel extends ViewModel {
     // for future improvements
-    public void setFurnitures(ArrayList<Furniture> furnitures) {
-        Cache.furnitures = new ArrayList<>(furnitures);
+    public void setFurnitures(ArrayList<Furniture> furnituress, ProductHelper productHelper) {
+        furnitures = new ArrayList<>(furnituress);
+
+
+        for (Furniture furniture :
+                furnitures) {
+            ProductModel product = new ProductModel(furniture.getProduct_name(), furniture.getPrice(), furniture.getImage(), furniture.getDescription());
+            productHelper.insertProduct(product);
+        }
+
     }
 
     // create the adapter for home recycler view

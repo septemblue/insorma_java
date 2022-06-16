@@ -18,6 +18,11 @@ import com.septemblue.insorma.local.Product;
 import com.septemblue.insorma.local.Transaction;
 import com.septemblue.insorma.local.Users;
 import com.septemblue.insorma.main.dataclass.Furniture;
+import com.septemblue.insorma.storage.ProductHelper;
+import com.septemblue.insorma.storage.ProductModel;
+import com.septemblue.insorma.storage.TransactionHelper;
+import com.septemblue.insorma.storage.TransactionModel;
+import com.septemblue.insorma.storage.UserHelper;
 import com.septemblue.insorma.storage.UserModel;
 
 import java.util.Calendar;
@@ -29,18 +34,47 @@ public class FurnitureDetailViewModel extends ViewModel {
     private MutableLiveData<String> _furnitureDetailMessage = new MutableLiveData<>("");
     LiveData<String> furnitureDetailMessage = _furnitureDetailMessage;
 
+    private MutableLiveData<ProductModel> _checkedProduct = new MutableLiveData<>("");
+    LiveData<ProductModel> checkedProduct = _checkedProduct;
+
+    public LiveData<ProductModel> getCheckedProduct() {
+        return checkedProduct;
+    }
+
+    public void set_checkedProduct(Furniture furniture) {
+        ProductModel loggedUser = null;
+        boolean validEmail = false;
+        for (ProductModel user :
+                ProductHelper.products) {
+            if (user.emailAddress.equals(userEmail)) {
+                validEmail = true;
+                loggedUser = user;
+            }
+        }
+
+        if (validEmail || userEmail.equals("")) {
+            _loggedUser.setValue(loggedUser);
+        } else {
+            throw new RuntimeException("user does not exist");
+        }
+    }
+
     // function to buy, only buy when validation is succeeded
-    public void buy(String mQuantity, Furniture furniture) {
+    public void buy(String mQuantity, Furniture furniture, TransactionHelper transactionHelper, UserHelper userHelper, ProductHelper productHelper) {
         int quantity = Integer.parseInt(mQuantity);
         boolean valid = validate(quantity);
 
 
         if (valid) {
-            Database.setTransId(Database.getTransId() + 1);
             UserModel user = Cache.getLoggedUser().getValue();
-            Objects.requireNonNull(Database.getTransactionHistory().getValue())
-                    .add(new Transaction(Database.getTransId(), user, quantity, furniture,
-                            Integer.parseInt(furniture.getPrice()) * quantity, Calendar.getInstance().getTime()));
+//            Objects.requireNonNull(Database.getTransactionHistory().getValue())
+//                    .add(new Transaction(Database.getTransId(), user, quantity, furniture,
+//                            Integer.parseInt(furniture.getPrice()) * quantity, Calendar.getInstance().getTime()));
+//            TransactionModel transaction = new TransactionModel();
+//            transaction.productID =
+            transaction.userID = user.userID;
+
+            transactionHelper.addTransaction();
         }
         sendSMS(furniture, valid);
     }

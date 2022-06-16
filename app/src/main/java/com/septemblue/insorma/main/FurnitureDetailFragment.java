@@ -37,6 +37,11 @@ import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.local.Database;
 import com.septemblue.insorma.local.Product;
 import com.septemblue.insorma.main.dataclass.Furniture;
+import com.septemblue.insorma.storage.ProductHelper;
+import com.septemblue.insorma.storage.ProductModel;
+import com.septemblue.insorma.storage.TransactionHelper;
+import com.septemblue.insorma.storage.UserHelper;
+import com.septemblue.insorma.storage.UserModel;
 
 import java.util.Objects;
 // please read note above package
@@ -45,6 +50,9 @@ public class FurnitureDetailFragment extends Fragment {
     private FurnitureDetailViewModel viewModel;
     private FragmentFurnitureDetailBinding binding;
     ActivityResultLauncher<String> requestPermissionLauncher;
+    UserHelper userHelper;
+    TransactionHelper transactionHelper;
+    ProductHelper productHelper;
 
 
     // has option menu
@@ -52,6 +60,11 @@ public class FurnitureDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        userHelper = new UserHelper(this.getContext());
+        transactionHelper = new TransactionHelper(this.getContext());
+        productHelper = new ProductHelper(this.getContext());
+
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                     if (isGranted) {
 
@@ -85,7 +98,8 @@ public class FurnitureDetailFragment extends Fragment {
 
         // button to buy
         binding.furnitureDetailBuyButton.setOnClickListener(it -> {
-            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedFurniture);
+            // kasih user mana yang beli sama product id yang dibeli.
+            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedFurniture, transactionHelper, userHelper, productHelper);
             viewModel.furnitureDetailMessage.observe(getViewLifecycleOwner(), newValue -> {
                 Toast.makeText(getContext(), newValue, Toast.LENGTH_SHORT).show();
             });

@@ -35,7 +35,7 @@ public class UserHelper {
         contentValues.put(COLUMN_PASSWORD, "admin");
         contentValues.put(COLUMN_PHONE_NUMBER, "admin");
 
-        long insert = db.insert("SIGN_TABLE", null, contentValues);
+        long insert = db.insert("USER_TABLE", null, contentValues);
         if (insert != -1) updateUserList();
         return insert != -1;
     }
@@ -49,7 +49,7 @@ public class UserHelper {
         contentValues.put(COLUMN_PASSWORD, password);
         contentValues.put(COLUMN_PHONE_NUMBER, phone);
 
-        long insert = db.insert("SIGN_TABLE", null, contentValues);
+        long insert = db.insert("USER_TABLE", null, contentValues);
         if (insert != -1) updateUserList();
 
         return insert != -1;
@@ -57,19 +57,21 @@ public class UserHelper {
 
     public void updateUserList() {
 
-        String getAllAccountsQuery = "SELECT * FROM SIGN_TABLE";
+        String getAllAccountsQuery = "SELECT * FROM USER_TABLE";
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(getAllAccountsQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
+                int userID = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
                 String email = cursor.getString(cursor.getColumnIndexOrThrow("EMAIL_ADDRESS"));
                 String username = cursor.getString(cursor.getColumnIndexOrThrow("USERNAME"));
                 String dbpassword = cursor.getString(cursor.getColumnIndexOrThrow("PASSWORD"));
                 String phone = cursor.getString(cursor.getColumnIndexOrThrow("PHONE_NUMBER"));
 
                 UserModel userModel = new UserModel(email, username, dbpassword, phone);
+                userModel.userID = userID;
                 users.add(userModel);
 
                 Log.i("model", userModel.toString());
