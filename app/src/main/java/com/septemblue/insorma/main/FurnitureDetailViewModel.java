@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -34,48 +35,23 @@ public class FurnitureDetailViewModel extends ViewModel {
     private MutableLiveData<String> _furnitureDetailMessage = new MutableLiveData<>("");
     LiveData<String> furnitureDetailMessage = _furnitureDetailMessage;
 
-    private MutableLiveData<ProductModel> _checkedProduct = new MutableLiveData<>("");
-    LiveData<ProductModel> checkedProduct = _checkedProduct;
-
-    public LiveData<ProductModel> getCheckedProduct() {
-        return checkedProduct;
-    }
-
-    public void set_checkedProduct(Furniture furniture) {
-        ProductModel loggedUser = null;
-        boolean validEmail = false;
-        for (ProductModel user :
-                ProductHelper.products) {
-            if (user.emailAddress.equals(userEmail)) {
-                validEmail = true;
-                loggedUser = user;
-            }
-        }
-
-        if (validEmail || userEmail.equals("")) {
-            _loggedUser.setValue(loggedUser);
-        } else {
-            throw new RuntimeException("user does not exist");
-        }
-    }
 
     // function to buy, only buy when validation is succeeded
-    public void buy(String mQuantity, Furniture furniture, TransactionHelper transactionHelper, UserHelper userHelper, ProductHelper productHelper) {
+    public void buy(String mQuantity, Furniture furniture, TransactionHelper transactionHelper) {
         int quantity = Integer.parseInt(mQuantity);
         boolean valid = validate(quantity);
-
+        Cache.setCheckedProduct(furniture);
 
         if (valid) {
             UserModel user = Cache.getLoggedUser().getValue();
-//            Objects.requireNonNull(Database.getTransactionHistory().getValue())
-//                    .add(new Transaction(Database.getTransId(), user, quantity, furniture,
-//                            Integer.parseInt(furniture.getPrice()) * quantity, Calendar.getInstance().getTime()));
-//            TransactionModel transaction = new TransactionModel();
-//            transaction.productID =
-            transaction.userID = user.userID;
+            ProductModel product = Cache.getCheckedProduct().getValue();
+            String transactionDate = Calendar.getInstance().getTime().toString();
 
-            transactionHelper.addTransaction();
+            TransactionModel transaction = new TransactionModel(user.userID, product.productID, transactionDate, quantity);
+            Log.i("transak", transaction.toString());
+            transactionHelper.addTransaction(transaction);
         }
+
         sendSMS(furniture, valid);
     }
 

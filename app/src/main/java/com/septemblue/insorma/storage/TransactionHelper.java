@@ -19,12 +19,12 @@ public class TransactionHelper {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public void addTransaction(TransactionModel transaction, int userID, int productID) {
+    public void addTransaction(TransactionModel transaction) {
         db = databaseHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("userID", userID);
-        contentValues.put("productID", productID);
+        contentValues.put("userID", transaction.userID);
+        contentValues.put("productID", transaction.productID);
         contentValues.put("transactionDate", transaction.transactionDate.toString());
         contentValues.put("quantity", transaction.quantity);
 
@@ -46,7 +46,8 @@ public class TransactionHelper {
                 String transactionDate = cursor.getString(cursor.getColumnIndexOrThrow("transactionDate"));
                 int quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"));
 
-                TransactionModel transaction = new TransactionModel(transactionID, userID, productID, transactionDate, quantity);
+                TransactionModel transaction = new TransactionModel(userID, productID, transactionDate, quantity);
+                transaction.transactionID = transactionID;
                 transactions.add(transaction);
 
                 cursor.moveToNext();

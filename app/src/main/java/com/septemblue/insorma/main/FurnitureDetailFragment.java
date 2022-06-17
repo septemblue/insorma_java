@@ -98,8 +98,7 @@ public class FurnitureDetailFragment extends Fragment {
 
         // button to buy
         binding.furnitureDetailBuyButton.setOnClickListener(it -> {
-            // kasih user mana yang beli sama product id yang dibeli.
-            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedFurniture, transactionHelper, userHelper, productHelper);
+            viewModel.buy(binding.furnitureDetailQuantity.getText().toString(), checkedFurniture, transactionHelper);
             viewModel.furnitureDetailMessage.observe(getViewLifecycleOwner(), newValue -> {
                 Toast.makeText(getContext(), newValue, Toast.LENGTH_SHORT).show();
             });

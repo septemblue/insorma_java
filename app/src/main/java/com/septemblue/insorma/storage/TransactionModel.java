@@ -7,14 +7,24 @@ public class TransactionModel {
     public int transactionID;
     public int userID;
     public int productID;
-    public Date transactionDate;
+    public String transactionDate;
     public int quantity;
 
-    public TransactionModel(int transactionID, int userID, int productID, String transactionDate, int quantity) {
-        this.transactionID = transactionID;
+    public TransactionModel(int userID, int productID, String transactionDate, int quantity) {
         this.userID = userID;
         this.productID = productID;
         this.transactionDate = transactionDate;
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionModel{" +
+                "transactionID=" + transactionID +
+                ", userID=" + userID +
+                ", productID=" + productID +
+                ", transactionDate='" + transactionDate + '\'' +
+                ", quantity=" + quantity +
+                '}';
     }
 }

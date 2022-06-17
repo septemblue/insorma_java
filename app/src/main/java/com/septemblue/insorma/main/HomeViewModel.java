@@ -17,14 +17,14 @@ public class HomeViewModel extends ViewModel {
     // for future improvements
     public void setFurnitures(ArrayList<Furniture> furnituress, ProductHelper productHelper) {
         furnitures = new ArrayList<>(furnituress);
-
-
-        for (Furniture furniture :
-                furnitures) {
-            ProductModel product = new ProductModel(furniture.getProduct_name(), furniture.getPrice(), furniture.getImage(), furniture.getDescription());
-            productHelper.insertProduct(product);
+        Log.i("logi", String.format("%d", productHelper.getProducts().size()));
+        if (productHelper.getProducts().size() <= 0) {
+            for (Furniture furniture :
+                    furnitures) {
+                ProductModel product = new ProductModel(furniture.getProduct_name(), furniture.getPrice(), furniture.getImage(), furniture.getDescription());
+                productHelper.insertProduct(product);
+            }
         }
-
     }
 
     // create the adapter for home recycler view

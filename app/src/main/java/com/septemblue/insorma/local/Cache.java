@@ -11,6 +11,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.septemblue.insorma.main.dataclass.Furniture;
 import com.septemblue.insorma.storage.DatabaseHelper;
+import com.septemblue.insorma.storage.ProductHelper;
+import com.septemblue.insorma.storage.ProductModel;
 import com.septemblue.insorma.storage.UserModel;
 
 import java.util.ArrayList;
@@ -22,7 +24,8 @@ public class Cache {
     static LiveData<UserModel> loggedUser = _loggedUser;
 
     // return immutable live data ;
-    public static LiveData<UserModel> getLoggedUser() { return loggedUser; }
+    public static LiveData<UserModel> getLoggedUser() {
+        return loggedUser; }
 
     // set logged user  only if user exist in database else throw // maybe later can catch it and give pop up window
     public static void setLoggedUser(String userEmail, List<UserModel> users) {
@@ -44,4 +47,30 @@ public class Cache {
         }
     }
     public static ArrayList<Furniture> furnitures = new ArrayList<>();
+
+
+    private static MutableLiveData<ProductModel> _checkedProduct = new MutableLiveData<>();
+    static LiveData<ProductModel> checkedProduct = _checkedProduct;
+
+    public static LiveData<ProductModel> getCheckedProduct() {
+        return checkedProduct;
+    }
+
+    public static void setCheckedProduct(Furniture furniture) {
+        ProductModel theProduct = null;
+        boolean valid = false;
+        for (ProductModel product :
+                ProductHelper.products) {
+            if (product.productName.equals(furniture.getProduct_name())) {
+                theProduct = product;
+                valid = true;
+            }
+        }
+
+        if (valid) {
+            _checkedProduct.setValue(theProduct);
+        } else {
+            throw new RuntimeException("user does not exist");
+        }
+    }
 }

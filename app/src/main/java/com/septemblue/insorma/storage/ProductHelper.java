@@ -54,9 +54,12 @@ public class ProductHelper {
                 cursor.moveToNext();
             }while(!cursor.isAfterLast());
         }
-
         cursor.close();
         db.close();
     }
 
+    public ArrayList<ProductModel> getProducts() {
+        updateProductList();
+        return products;
+    }
 }

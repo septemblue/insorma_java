@@ -22,22 +22,6 @@ public class UserHelper {
 
     public UserHelper(Context context) {
         databaseHelper = new DatabaseHelper(context);
-        admin();
-    }
-
-    public boolean admin() {
-        // add admin
-        db = databaseHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(COLUMN_EMAIL_ADDRESS, "admin");
-        contentValues.put(COLUMN_USERNAME, "admin");
-        contentValues.put(COLUMN_PASSWORD, "admin");
-        contentValues.put(COLUMN_PHONE_NUMBER, "admin");
-
-        long insert = db.insert("USER_TABLE", null, contentValues);
-        if (insert != -1) updateUserList();
-        return insert != -1;
     }
 
     public boolean register(String email, String username, String password, String phone) {
@@ -83,4 +67,8 @@ public class UserHelper {
         db.close();
     }
 
+    public List<UserModel> getUsers() {
+        updateUserList();
+        return users;
+    }
 }
