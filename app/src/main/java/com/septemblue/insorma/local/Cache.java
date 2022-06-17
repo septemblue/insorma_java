@@ -13,6 +13,7 @@ import com.septemblue.insorma.main.dataclass.Furniture;
 import com.septemblue.insorma.storage.DatabaseHelper;
 import com.septemblue.insorma.storage.ProductHelper;
 import com.septemblue.insorma.storage.ProductModel;
+import com.septemblue.insorma.storage.UserHelper;
 import com.septemblue.insorma.storage.UserModel;
 
 import java.util.ArrayList;

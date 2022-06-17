@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.septemblue.insorma.local.Cache;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class UserHelper {
     }
 
     public boolean register(String email, String username, String password, String phone) {
+
         db = databaseHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -62,7 +65,6 @@ public class UserHelper {
                 cursor.moveToNext();
             }while(!cursor.isAfterLast());
         }
-
         cursor.close();
         db.close();
     }
@@ -70,5 +72,24 @@ public class UserHelper {
     public List<UserModel> getUsers() {
         updateUserList();
         return users;
+    }
+
+    public void editUsers(int userID, String username) {
+        db = databaseHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        String where = "id=?";
+        String[] whereArgs = new String[]{String.valueOf(userID)};
+
+        contentValues.put(COLUMN_USERNAME, username);
+        db.update("USER_TABLE", contentValues, where, whereArgs);
+    }
+
+    public boolean deleteUsers(int userID) {
+        db = databaseHelper.getWritableDatabase();
+        String where = "id=?";
+        String[] whereArgs = new String[]{String.valueOf(userID)};
+        long del = db.delete("USER_TABLE", where, whereArgs);
+        return del != -1;
     }
 }

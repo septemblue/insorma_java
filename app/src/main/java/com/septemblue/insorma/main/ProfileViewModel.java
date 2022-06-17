@@ -6,7 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.local.Users;
+import com.septemblue.insorma.storage.UserHelper;
+import com.septemblue.insorma.storage.UserModel;
 
 import java.util.HashMap;
 
@@ -25,16 +28,17 @@ public class ProfileViewModel extends ViewModel {
     LiveData<String> profileMessage = _profileMessage;
 
     // edit the username if validation succeeded
-    public void editUsername(EditText newUsername, HashMap<String, Users> accounts, Users user) {
+    public void editUsername(EditText newUsername, HashMap<String, Users> accounts, UserHelper userHelper) {
         boolean valid = validate(newUsername.getText().toString(), accounts);
         if (valid) {
+            _editUsername(newUsername.getText().toString(), userHelper);
             _usernameChanged.setValue(true);
-            _editUsername(newUsername.getText().toString(), user);
         }
     }
 
-    private void _editUsername(String newUsername, Users user) {
-        user.username = newUsername;
+    private void _editUsername(String newUsername, UserHelper userHelper) {
+        userHelper.editUsers(Cache.getLoggedUser().getValue().userID, newUsername);
+        Cache.setLoggedUser(Cache.getLoggedUser().getValue().emailAddress, userHelper.getUsers());
     }
 
     private boolean validate(String newUsername, HashMap<String, Users> accounts) {
@@ -49,8 +53,8 @@ public class ProfileViewModel extends ViewModel {
         return true;
     }
 
-    public boolean deleteAccount(HashMap<String, Users> accounts, Users user) {
-        boolean deleted = _deleteAccount(accounts, user);
+    public boolean deleteAccount(UserHelper userHelper) {
+        boolean deleted = _deleteAccount(userHelper);
         if (deleted) {
             _profileMessage.setValue("Account Deleted");
             return true;
@@ -59,9 +63,16 @@ public class ProfileViewModel extends ViewModel {
         return false;
     }
 
-    private boolean _deleteAccount(HashMap<String, Users> accounts, Users user) {
-        if (accounts.containsValue(user)) {
-            accounts.remove(user.emailAddress);
+    private boolean _deleteAccount(UserHelper userHelper) {
+        for (UserModel user :
+                UserHelper.users) {
+            if (user.userID == Cache.getLoggedUser().getValue().userID) {
+                userHelper.deleteUsers(Cache.getLoggedUser().getValue().userID);
+                UserHelper.users.remove(user);
+            }
+        }
+        if (userHelper.deleteUsers(Cache.getLoggedUser().getValue().userID)) {
+            userHelper.updateUserList();
             _accountDeleted.setValue(true);
             return true;
         }

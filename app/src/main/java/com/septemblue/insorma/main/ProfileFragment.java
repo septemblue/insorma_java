@@ -35,6 +35,7 @@ import com.septemblue.insorma.local.Cache;
 import com.septemblue.insorma.sign.SignActivity;
 import com.septemblue.insorma.storage.DatabaseHelper;
 import com.septemblue.insorma.storage.UserHelper;
+import com.septemblue.insorma.storage.UserModel;
 
 // please read note above package
 public class ProfileFragment extends Fragment {
@@ -59,7 +60,8 @@ public class ProfileFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         // get the account from cache
-        Users user = Database.accounts.getValue().get(Cache.getLoggedUser().getValue());
+        userHelper.updateUserList();
+        UserModel user = Cache.getLoggedUser().getValue();
 
         // give layout profile data
         binding.profileUsername.setText(user.username);
@@ -76,10 +78,11 @@ public class ProfileFragment extends Fragment {
 
         // save the edit value and give notification
         binding.profileSaveButton.setOnClickListener(it -> {
-            viewModel.editUsername(binding.profileEditUsername, Database.accounts.getValue(), user);
+            viewModel.editUsername(binding.profileEditUsername, Database.accounts.getValue(), userHelper);
             viewModel.usernameChanged.observe(getViewLifecycleOwner(), newValue -> {
                 if (newValue) {
-                    binding.profileUsername.setText(user.username);
+                    String newUsername = Cache.getLoggedUser().getValue().username;
+                    binding.profileUsername.setText(newUsername);
                 }
             });
             Toast.makeText(getContext(), viewModel.profileMessage.getValue(), Toast.LENGTH_SHORT).show();
@@ -91,7 +94,7 @@ public class ProfileFragment extends Fragment {
 
         // button to delete account and redirect to sign activity
         binding.profileDeleteAccount.setOnClickListener(it -> {
-            viewModel.deleteAccount(Database.accounts.getValue(), user);
+            viewModel.deleteAccount(userHelper);
             Toast.makeText(getContext(), viewModel.profileMessage.getValue(), Toast.LENGTH_SHORT).show();
             viewModel.accountDeleted.observe(getViewLifecycleOwner(), newValue -> {
                 if (newValue) {
